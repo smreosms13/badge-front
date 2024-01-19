@@ -1,3 +1,3 @@
 # Verifiable Data Badge Service
-- 2024 Blockchain Lab Intership
+- 2024 Blockchain Lab Internship
 
