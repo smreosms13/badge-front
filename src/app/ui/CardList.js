@@ -1,8 +1,8 @@
 import Card from "./Card"
-
-export default function CardList({name, contents}) {
+export default function CardList({name, contents, CustomCard}) {
+    const CardComponent = CustomCard ? CustomCard : Card;
     return(
-        <div className="flex flex-col">
+        <div className="flex flex-col overflow-scroll scrollbar-hide">
             {name && (
                 <div className="my-3 font-medium text-lg">
                     <p>{name}</p>
@@ -10,7 +10,7 @@ export default function CardList({name, contents}) {
             )}
             <div className="h-64 overflow-y-scroll p-2 scrollbar-hide">
                 {contents.map((content) => (
-                    <Card key={content.subject} content={content}></Card>
+                    <CardComponent key={content.subject} content={content}></CardComponent>
                 ))}
             </div>
         </div>   
