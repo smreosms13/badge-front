@@ -1,4 +1,3 @@
-import Card from "./Card"
 import {
     BeakerIcon,
     LanguageIcon,
@@ -8,6 +7,7 @@ import {
     PuzzlePieceIcon,
     RadioIcon,
 } from '@heroicons/react/24/solid';
+import CardList from '../CardList';
 
 const vouchers = [
     {subject: '현대자동차 인턴 우선채용', href: '/badge/voucher', icon:BeakerIcon, type: 'Skill Achievement Badge',achievement : 100},
@@ -17,20 +17,9 @@ const vouchers = [
     {subject: '토스뱅크 개발자 우선채용', href:'/badge/voucher', icon:RadioIcon,  type:'Skill Achievement Badge', achievement:70},
 ];
 
-export default function ListBox({name}) {
+export default function VoucherList(){
+    const name = '디지털 바우처';
     return(
-        <>
-            <div className="flex flex-col">
-                <div className="my-3 font-medium text-lg">
-                    <p>{name}</p>
-                </div>
-                <div className="h-64 overflow-y-scroll p-2 scrollbar-hide">
-                    {vouchers.map((voucher) => (
-                        <Card key={voucher.subject} voucher={voucher}></Card>
-                    ))}
-                </div>
-            </div>
-        </>
+        <CardList name={name} contents={vouchers}></CardList>
     )
-
-};
+}

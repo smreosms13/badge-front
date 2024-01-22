@@ -14,22 +14,22 @@ const links = [
     {name:'배지 관리하기', href: '/badge', icon:Cog8ToothIcon}
 ];
 
-export default function BtnNav() { 
+export default function BtnNav({contents=links}) { 
 
     return(
         <>
             <div className="max-w-sm mx-auto flex">
-                {links.map((link)=>{
-                    const LinkIcon = link.icon;
+                {contents.map((content)=>{
+                    const LinkIcon = content.icon;
                     return(
-                        <div key={link.name} className="h-16 mx-2 flex flex-col justify-center items-center">
+                        <div key={content.name} className="h-16 mx-2 flex flex-col justify-center items-center">
                             <Link
-                                href={link.href}
+                                href={content.href}
                                 className='flex justify-center items-center font-black w-12 h-12 rounded-full bg-slate-100 mb-1'
                             >                                
                                 <LinkIcon className="w-8 h-8"></LinkIcon>
                             </Link>
-                            <p className="text-xs">{link.name}</p>
+                            <p className="text-xs">{content.name}</p>
                             
                         </div>
                     );

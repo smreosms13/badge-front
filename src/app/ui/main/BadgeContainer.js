@@ -8,10 +8,10 @@ import {
     PuzzlePieceIcon,
     RadioIcon,
 } from '@heroicons/react/24/solid';
-import BadgeCarousel from './BadgeCarousel';
+import CarouselContainer from '../CarouselContainer';
 
 // mock data, move to the dummy page
-const badges = [
+const badgesMock = [
     {subject:'트위터 골드', href: '/badge/certificate', icon:BeakerIcon, isVaild: true, isVerified: true},
     {subject:'IBM', href: '/badge/certificate', icon:LanguageIcon, isVaild: true, isVerified: true},
     {subject:'하나은행VIP', href:'/badge/certificate', icon:ChatBubbleOvalLeftIcon, isVaild: true, isVerified: false},
@@ -27,27 +27,14 @@ const badges = [
 
 ];
 
-const filterValid = (contents) => {
-    return contents.filter(element => element.isVaild === true);
-};
-
-export default function BadgeContainer({name}) {
-    const maxBadgesPerBox = 6;
-    const badgeGroups = [];
-    const badgesValid = filterValid(badges); // array of valid badges
-
-    // Slice badgesValid into chunks of maxBadgesPerBox.
-    for(let i=0;i<badgesValid.length;i+=maxBadgesPerBox){
-        badgeGroups.push(badgesValid.slice(i, i+maxBadgesPerBox));
-    }
-
+export default function BadgeContainer({name, contents=badgesMock}) {
     return(
         <>
             <div className="flex flex-col rounded-3xl h-48 bg-blue-950 p-2">
                 <div className="mb-2 text-center">
                     <p className="text-white text-lg">{name}</p>
                 </div>
-                <BadgeCarousel badgeGroups={badgeGroups}></BadgeCarousel>
+                <CarouselContainer contents={contents}></CarouselContainer>
             </div>
         </>
     )

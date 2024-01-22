@@ -3,10 +3,10 @@ import clsx from 'clsx';
 import { useState, useRef, useEffect } from 'react';
 
 //Push the badges of badgeGroup into the Carousel component.
-const Carousel = ({ badgeGroup, index }) => (
+const CarouselPage = ({ contents, index }) => (
     <div key={`carousel-${index}`} className="w-full snap-center shrink-0 grid grid-cols-3 grid-rows-2 gap-3">
-      {badgeGroup.map((badge) => (
-        badge.isVaild && <Badge key={badge.subject} badge={badge}></Badge>
+      {contents.map((content) => (
+        content.isVaild && <Badge key={content.subject} content={content}></Badge>
       ))}
     </div>
 );
@@ -30,7 +30,7 @@ const CarouselIndicator = ({ totalCarousels, currentCarousel }) => (
     );
 
 
-export default function BadgeCarousel({badgeGroups}){
+export default function Carousel({contents}){
     const [currentCarousel, setCurrentCarousel] = useState(0);
     const containerRef = useRef();
 
@@ -63,11 +63,11 @@ export default function BadgeCarousel({badgeGroups}){
                 ref={containerRef}
                 className='flex overflow-x-auto snap-mandatory snap-x scrollbar-hide'
             >
-                {badgeGroups.map((badgeGroup, index)=>(
-                    <Carousel key={index} badgeGroup={badgeGroup} index={index}></Carousel>
+                {contents.map((content, index)=>(
+                    <CarouselPage key={index} contents={content} index={index}></CarouselPage>
                 ))}
             </div>
-            <CarouselIndicator totalCarousels={badgeGroups.length} currentCarousel={currentCarousel}></CarouselIndicator>        
+            <CarouselIndicator totalCarousels={contents.length} currentCarousel={currentCarousel}></CarouselIndicator>        
         </>
     )
 }
