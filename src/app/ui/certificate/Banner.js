@@ -1,4 +1,5 @@
 export default function Banner({content}){
+  // TODO content의 값을 넣어야 함. 현재 비워둠.
     return(
       <div className="flex items-center flex-col w-full bg-cover mb-5">
         <div
