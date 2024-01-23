@@ -14,10 +14,7 @@ export default function Page() {
 
         const fetchData = async () => {
             try {
-                const response = await fetch(`${process.env.API_URL}/getPublicVDBByTokenID/${tokenId}`, {
-                    method: 'GET',
-                    mode: 'no-cors'
-                });
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/getPublicVDBByTokenID/${tokenId}`);
                 const data = await response.json();
                 setContent(data);
 
