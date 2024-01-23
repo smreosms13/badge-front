@@ -29,14 +29,14 @@ export default function Table({user}){
                     <p className="ms-5 text-sm">{user.phone}</p>
                 </div>
             </div>
-            {/* <div className="">
+            <div className="">
                 <p className="text-sm font-normal text-gray-400">Birth Day</p>
                 <div className="flex my-1">
                     <div className="flex-grow ms-5 border-b border-slate-200 text-sm text-center">{year}</div>
                     <div className="flex-grow ms-5 border-b border-slate-200 text-sm text-center">{month}</div>
                     <div className="flex-grow ms-5 border-b border-slate-200 text-sm text-center">{day}</div>
                 </div>
-            </div> */}
+            </div>
         </div>
     </>
     )
