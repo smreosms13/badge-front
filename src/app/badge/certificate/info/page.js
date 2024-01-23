@@ -1,8 +1,11 @@
+import Banner from "@/app/ui/certificate/Banner";
+import Table from "@/app/ui/certificate/Table";
 export default function Page() {
-    const BtnName = "새로운 배지 만들기"
     return (
         <>
-            <p>배지 정보</p>
+            {/* TODO - component에 props로 content 주기 */}
+            <Banner></Banner>
+            <Table></Table>
         </>
 
     );
