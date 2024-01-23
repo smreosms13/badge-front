@@ -9,9 +9,9 @@ import {
 
 // move to dummy pages
 const links = [
-    {name:'배지 만들기', href: '/badge', icon:PlusCircleIcon},
-    {name:'배지 공유하기', href: '/badge', icon:ShareIcon},
-    {name:'배지 관리하기', href: '/badge', icon:Cog8ToothIcon}
+    {name:'배지 만들기', href: '/badge/certificate', icon:PlusCircleIcon},
+    {name:'배지 공유하기', href: '/badge/certificate', icon:ShareIcon},
+    {name:'배지 관리하기', href: '/badge/certificate', icon:Cog8ToothIcon}
 ];
 
 export default function BtnNav({contents=links}) { 

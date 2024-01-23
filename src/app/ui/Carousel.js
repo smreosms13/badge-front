@@ -1,12 +1,13 @@
-import Badge from './Badge';
+"use client"
+
 import clsx from 'clsx';
 import { useState, useRef, useEffect } from 'react';
 
 //Push the badges of badgeGroup into the Carousel component.
-const CarouselPage = ({ contents, index }) => (
+const CarouselPage = ({ contents, index, CarouselComponent}) => (
     <div key={`carousel-${index}`} className="w-full snap-center shrink-0 grid grid-cols-3 grid-rows-2 gap-3">
       {contents.map((content) => (
-        content.isVaild && <Badge key={content.subject} content={content}></Badge>
+        <CarouselComponent key={content.subject} content={content}></CarouselComponent>
       ))}
     </div>
 );
@@ -30,7 +31,7 @@ const CarouselIndicator = ({ totalCarousels, currentCarousel }) => (
     );
 
 
-export default function Carousel({contents}){
+export default function Carousel({contents, CarouselComponent}){
     const [currentCarousel, setCurrentCarousel] = useState(0);
     const containerRef = useRef();
 
@@ -64,7 +65,7 @@ export default function Carousel({contents}){
                 className='flex overflow-x-auto snap-mandatory snap-x scrollbar-hide'
             >
                 {contents.map((content, index)=>(
-                    <CarouselPage key={index} contents={content} index={index}></CarouselPage>
+                    <CarouselPage key={index} contents={content} index={index} CarouselComponent={CarouselComponent}></CarouselPage>
                 ))}
             </div>
             <CarouselIndicator totalCarousels={contents.length} currentCarousel={currentCarousel}></CarouselIndicator>        
