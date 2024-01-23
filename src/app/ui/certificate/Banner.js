@@ -1,5 +1,5 @@
 export default function Banner({content}){
-  // TODO content의 값을 넣어야 함. 현재 비워둠.
+
     return(
       <div className="flex items-center flex-col w-full bg-cover mb-5">
         <div
@@ -8,22 +8,21 @@ export default function Banner({content}){
           <div className="dark:!border-navy-700 absolute flex h-36 w-36 items-center justify-center rounded-full border-[4px] border-white bg-pink-400">
             <img
               className="h-full w-full rounded-full"
-              src=""
-              alt=""
+              src={content.image}
+              alt={content.name}
             />
           </div>
         </div>
       {/* Name and position */}
       <div className="mt-5 flex flex-col items-center">
         <h4 className="text-navy-700 text-xl font-bold dark:text-white">
-          content.name
+          {content.name}
         </h4>
-        <h5 className="text-base font-normal text-blue-600">content.category</h5>
+        <h5 className="text-base font-normal text-blue-600">{content.description}</h5>
       </div>
       <div className="ml-auto mt-5">
-        {/* ${content.tokenId} 넣기 */}
         <a 
-          href={`https://sepolia.etherscan.io/`}
+          href={`https://sepolia.etherscan.io/`} //TODO - ${content.txHash}
           className="bg-blue-600 rounded-xl p-1 px-2 text-white font-bold"
         >NFT Detail</a>
       </div>

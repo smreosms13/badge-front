@@ -1,35 +1,10 @@
-
+"use client"
+import { useState, useEffect } from 'react';
 
 import BottomButton from "@/app/ui/BottomButton";
 import Badge from "@/app/ui/certificate/Badge";
 import BadgeList from "@/app/ui/certificate/BadgeList";
 import CategoryContainer from "@/app/ui/certificate/CategoryContainer";
-
-import {
-    BeakerIcon,
-    LanguageIcon,
-    ChatBubbleOvalLeftIcon,
-    CubeIcon,
-    PuzzlePieceIcon,
-    RadioIcon,
-} from '@heroicons/react/24/solid';
-
-
-const badgesMock = [
-    {subject:'트위터 골드', href: '/badge/certificate/info', icon:BeakerIcon, isValid: true, isVerified: true},
-    {subject:'IBM', href: '/badge/certificate/info', icon:LanguageIcon, isValid: true, isVerified: true},
-    {subject:'하나은행VIP', href:'/badge/certificate/info', icon:ChatBubbleOvalLeftIcon, isValid: true, isVerified: false},
-    {subject: '대한항공', href:'/badge/certificate/info', icon:PuzzlePieceIcon, isValid: true, isVerified: true},
-    {subject: '토익900', href:'/badge/certificate/info', icon:RadioIcon, isValid: true, isVerified: false},
-    {subject: 'BMW클럽', href:'/badge/certificate/info', icon:CubeIcon, isValid: false, isVerified: true},    // Invalid    
-    {subject:'A연구소', href: '/badge/certificate/info', icon:BeakerIcon, isValid: true, isVerified: true},
-    {subject:'한자1급', href: '/badge/certificate/info', icon:LanguageIcon, isValid: true, isVerified: true},
-    {subject:'카카오톡', href:'/badge/certificate/info', icon:ChatBubbleOvalLeftIcon, isValid: true, isVerified: false},
-    {subject: '퍼즐마스터', href:'/badge/certificate/info', icon:PuzzlePieceIcon, isValid: true, isVerified: true},
-    {subject: 'MBC라디오', href:'/badge/certificate/info', icon:RadioIcon, isValid: true, isVerified: false},
-    {subject: 'Cube엔터', href:'/badge/certificate/info', icon:CubeIcon, isValid: true, isVerified: true},
-
-];
 
 const categoryMock = [
     {subject: '학적', index:1},
@@ -41,11 +16,45 @@ const categoryMock = [
 ];
 
 export default function Page() {
-    const BtnName = "새로운 배지 만들기"
+    const BtnName = "새로운 배지 만들기";
+    const [contents, setContents] = useState(null);
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const userId = "did:vdb:edb89817-421d-46d9-ad4d-3996230fdb68";
+    
+          const response = await fetch('https://us-central1-openbadges-537a3.cloudfunctions.net/api/getAllMyVDBs', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userId,
+            }),
+          });
+    
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+    
+          const data = await response.json();
+          // Ensure contents is an array
+          const contentsArray = Array.isArray(data) ? data : [data];
+    
+          setContents(contentsArray);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+    
+      fetchData();
+    }, []);
+
     return (
         <>
             <CategoryContainer contents={categoryMock}></CategoryContainer>
-            <BadgeList contents={badgesMock} CustomCard={Badge}></BadgeList>
+            {contents ?(<BadgeList contents={contents} CustomCard={Badge}></BadgeList>):(<p>Loading</p>)}
             <BottomButton name={BtnName}></BottomButton>
         </>
 
