@@ -14,7 +14,10 @@ export default function Page() {
 
         const fetchData = async () => {
             try {
-                const response = await fetch(`https://us-central1-openbadges-537a3.cloudfunctions.net/api/getPublicVDBByTokenID/${tokenId}`);
+                const response = await fetch(`${process.env.API_URL}/getPublicVDBByTokenID/${tokenId}`, {
+                    method: 'GET',
+                    mode: 'no-cors'
+                });
                 const data = await response.json();
                 setContent(data);
 

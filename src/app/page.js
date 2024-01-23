@@ -15,8 +15,9 @@ export default function Page() {
       try {
         const userId = "did:vdb:edb89817-421d-46d9-ad4d-3996230fdb68";
   
-        const response = await fetch('https://us-central1-openbadges-537a3.cloudfunctions.net/api/getAllMyVDBs', {
+        const response = await fetch(`${process.env.API_URL}/getAllMyVDBs`, {
           method: 'POST',
+          mode: 'no-cors',
           headers: {
             'Content-Type': 'application/json',
           },
