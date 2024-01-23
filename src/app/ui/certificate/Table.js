@@ -1,5 +1,6 @@
 import { UserCircleIcon, EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/outline"
 export default function Table({content}){
+      // TODO content의 값을 넣어야 함. 현재 비워둠.
     return(
         <>
         <div className="flex mb-3 flex-col ">
