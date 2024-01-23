@@ -1,6 +1,6 @@
 import { UserCircleIcon, EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/outline"
-export default function Table({user}){
-    const birthday = new Date(user.birthday);
+export default function Table({content}){
+    const birthday = new Date(content.birthday);
     const year = birthday.getFullYear();
     const month = birthday.getMonth() +1 ;
     const day = birthday.getDate();
@@ -12,21 +12,21 @@ export default function Table({user}){
                 <p className="text-sm font-normal text-gray-400">Full Name</p>
                 <div className="flex my-1">
                     <UserCircleIcon className="w-5 h-5 stroke-gray-400"></UserCircleIcon>
-                    <p className="ms-5 text-sm">{user.name}</p>
+                    <p className="ms-5 text-sm">{content.name}</p>
                 </div>
             </div>
             <div className="my-2">
                 <p className="text-sm font-normal text-gray-400">Email Address</p>
                 <div className="flex my-1">
                     <EnvelopeIcon className="w-5 h-5 stroke-gray-400"></EnvelopeIcon>
-                    <p className="ms-5 text-sm">{user.email}</p>
+                    <p className="ms-5 text-sm">{content.email}</p>
                 </div>
             </div>
             <div className="">
                 <p className="text-sm font-normal text-gray-400">Phone Number</p>
                 <div className="flex my-1">
                     <PhoneIcon className="w-5 h-5 stroke-gray-400"></PhoneIcon>
-                    <p className="ms-5 text-sm">{user.phone}</p>
+                    <p className="ms-5 text-sm">{content.phone}</p>
                 </div>
             </div>
             <div className="">
