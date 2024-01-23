@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const userMock = { name: "Adela Parkson", img: 'https://horizon-tailwind-react-git-tailwind-components-horizon-ui.vercel.app/static/media/avatar11.1060b63041fdffa5f8ef.png' };
 
-export default function HeaderBox({user=userMock}){
+export default function Header({user=userMock}){
     return(
         <div className="flex items-center me-2">
             <Link
