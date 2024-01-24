@@ -65,7 +65,7 @@ export default function Carousel({contents, CarouselComponent}){
                 className='flex overflow-x-auto snap-mandatory snap-x scrollbar-hide'
             >
                 {contents.map((content, index)=>(
-                    <CarouselPage key={index} contents={content} index={index} CarouselComponent={CarouselComponent}></CarouselPage>
+                    <CarouselPage key={`carouselPage-${index}`} contents={content} index={index} CarouselComponent={CarouselComponent}></CarouselPage>
                 ))}
             </div>
             <CarouselIndicator totalCarousels={contents.length} currentCarousel={currentCarousel}></CarouselIndicator>        
