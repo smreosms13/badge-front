@@ -17,13 +17,12 @@ export default function Page() {
   
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/getAllMyVDBs`, {
           method: 'POST',
-          mode: 'no-cors',
           headers: {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*', // Replace '*' with the specific origin(s) you want to allow
             'Access-Control-Allow-Methods': 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
             'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-          },
+            },
           body: JSON.stringify({
             userId,
           }),
