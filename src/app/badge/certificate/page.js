@@ -26,6 +26,7 @@ export default function Page() {
     
           const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/getAllMyVDBs`, {
             method: 'POST',
+            mode: 'no-cors',
             headers: {
               'Content-Type': 'application/json',
               'Access-Control-Allow-Origin': '*', // Replace '*' with the specific origin(s) you want to allow
