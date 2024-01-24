@@ -14,16 +14,24 @@ export default function Page() {
 
         const fetchData = async () => {
             try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/getPublicVDBByTokenID/${tokenId}`, {
+                const userId = "did:vdb:edb89817-421d-46d9-ad4d-3996230fdb68";
+
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/getallVDBByUserIDAndTokenID`, {
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Access-Control-Allow-Origin': '*', // Replace '*' with the specific origin(s) you want to allow
                         'Access-Control-Allow-Methods': 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
                         'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
                         },
+                    body: JSON.stringify({
+                        userId, tokenId
+                    }),                
+                    
                 });
                 const data = await response.json();
-                setContent(data);
+                const contentsArray = Array.isArray(data) ? data[0] : data;
+                setContent(contentsArray);
 
             } catch (error) {
                 console.error('Error fetching data:', error);
