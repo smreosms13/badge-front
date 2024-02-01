@@ -1,7 +1,6 @@
 "use client"
-import CarouselContainer from "../CarouselContainer"
 import Category from "./Category"
-
+import CarouselContainer from "@/components/ui/CarouselContainer";
 
 export default function CategoryContainer({ contents }) {
     return (

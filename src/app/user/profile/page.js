@@ -1,8 +1,7 @@
-import Table from "@/app/ui/profile/Table";
-import Banner from "@/app/ui/profile/Banner";
-import CardList from "@/app/ui/CardList";
-import LinkCard from "@/app/ui/profile/LinkCard";
-
+import Table from "@/components/homepage/profile/Table";
+import LinkCard from "@/components/homepage/profile/LinkCard";
+import Banner from "@/components/homepage/profile/Banner";
+import CardList from "@/components/ui/CardList";
 const userMock = { 
     name: "Adela Parkson", 
     email: "adelaPakerson@gmail.com", 

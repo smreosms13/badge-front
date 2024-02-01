@@ -10,11 +10,14 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.1.1",
+    "axios": "^1.6.7",
     "clsx": "^2.1.0",
+    "firebase": "^10.7.2",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
-    "tailwind-scrollbar-hide": "^1.1.7"
+    "tailwind-scrollbar-hide": "^1.1.7",
+    "wagmi": "^2.5.5"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",

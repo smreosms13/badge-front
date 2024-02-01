@@ -9,7 +9,7 @@ export default function Badge({content}) {
 
     return(
         <Link
-            href={`/badge/certificate/${content.tokenId}/detail`}
+            href={`/badge/certificate/${content.id}/detail`}
             className="flex flex-col items-center "
         >
             <div className={`flex justify-center items-center relative w-20 h-20 rounded-xl border ${!isValid ? 'bg-gray-500' : ''}`}>

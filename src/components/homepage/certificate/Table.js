@@ -28,7 +28,6 @@ function formatDate(input) {
 export default function Table({content}){
 
     const issuanceDate = formatDate(content.issuanceDate);
-    console.log(content.expirationDate)
     const expirationDate = formatDate(content.expirationDate)
 
     return(

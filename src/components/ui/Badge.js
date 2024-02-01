@@ -9,7 +9,7 @@ export default function Badge({content}) {
     const isVerified = JSON.parse(content.isVerified)
     return(
         <Link
-            href={`/badge/certificate/${content.tokenId}/detail`}
+            href={`/badge/certificate/${content.id}/detail`}
             className="flex flex-col p-1 items-center"
         >
             <div className="flex justify-center items-center relative  rounded-xl">
