@@ -1,5 +1,7 @@
+
 import { Inter, Noto_Sans_KR, Poppins } from 'next/font/google'
-import '@/app/ui/globals.css'
+import './globals.css'
+import { AuthProvider } from '@/context/Context';
 
 //기본 폰트 : Noto_Sans_KR
 const notoSansKr = Noto_Sans_KR({
@@ -31,7 +33,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ko">
       <body className={cls(notoSansKr.className, inter.variable, poppins.variable)}>
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>      
       </body>
     </html>
   )
