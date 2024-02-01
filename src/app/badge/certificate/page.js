@@ -1,10 +1,10 @@
 "use client"
 import { useState, useEffect } from 'react';
 
-import BottomButton from "@/app/ui/BottomButton";
-import Badge from "@/app/ui/certificate/Badge";
-import BadgeList from "@/app/ui/certificate/BadgeList";
-import CategoryContainer from "@/app/ui/certificate/CategoryContainer";
+import BottomButton from '@/components/ui/BottomButton'; 
+import Badge from '@/components/homepage/certificate/Badge';
+import BadgeList from '@/components/homepage/certificate/BadgeList';
+import CategoryContainer from '@/components/homepage/certificate/CategoryContainer';
 
 const categoryMock = [
     {subject: '학적', index:1},
