@@ -39,9 +39,6 @@ export default function BadgeContainer({name}) {
         }
       };
 
-      console.log("Contents", contents)
-      console.log(isLoading)
-
     if(!currentUser){
         router.push('/')
     } else {
