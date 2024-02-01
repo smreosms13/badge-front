@@ -1,5 +1,10 @@
+"use client"
 import { UserCircleIcon, EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/outline"
+import { useAuth } from "@/context/Context";
+
 export default function Table({content}){
+    const { currentUser } = useAuth()
+
     const birthday = new Date(content.birthday);
     const year = birthday.getFullYear();
     const month = birthday.getMonth() +1 ;
@@ -12,14 +17,14 @@ export default function Table({content}){
                 <p className="text-sm font-normal text-gray-400">Full Name</p>
                 <div className="flex my-1">
                     <UserCircleIcon className="w-5 h-5 stroke-gray-400"></UserCircleIcon>
-                    <p className="ms-5 text-sm">{content.name}</p>
+                    <p className="ms-5 text-sm">{currentUser.displayName}</p>
                 </div>
             </div>
             <div className="my-2">
                 <p className="text-sm font-normal text-gray-400">Email Address</p>
                 <div className="flex my-1">
                     <EnvelopeIcon className="w-5 h-5 stroke-gray-400"></EnvelopeIcon>
-                    <p className="ms-5 text-sm">{content.email}</p>
+                    <p className="ms-5 text-sm">{currentUser.email}</p>
                 </div>
             </div>
             <div className="">
