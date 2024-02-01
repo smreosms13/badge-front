@@ -11,17 +11,22 @@ export default function Page() {
     const params = useParams();
     const badgeID = decodeURIComponent(params.id);
     const { currentUser } = useAuth();
-
     const [content, setContent] = useState(null);
+
+    useEffect(() => {
+        fetchData();
+    }, []);
     const fetchData = async () => {
         try {
-            const userId = currentUser?.uid
+
+            console.log(currentUser.uid)
+            const dataToSend = {
+                userId : currentUser?.uid,
+                badgeID : badgeID
+            }
 
             const response = await axios.post(
-                `${process.env.NEXT_PUBLIC_API_URL}/getVDBByUserIDAndBadgeID`, 
-                {   userId, 
-                    badgeID
-                },
+                `${process.env.NEXT_PUBLIC_API_URL}/getVDBByUserIDAndBadgeID`, dataToSend
             );
             const data = response.data
             const contentsArray = Array.isArray(data) ? data[0] : data;
@@ -33,9 +38,7 @@ export default function Page() {
         }
     };
 
-    useEffect(() => {
-        fetchData();
-    }, []);
+
     
     return (
         <>
