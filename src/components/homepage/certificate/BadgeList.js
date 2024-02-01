@@ -36,7 +36,7 @@ export default function BadgeList() {
                 (<p>Loading...</p>) : 
                 (
                     contents.map((content) => (
-                        <Badge key={content.badgeName} content={content}></Badge>
+                        <Badge key={content.id} content={content}></Badge>
                     ))
                 )
             }
