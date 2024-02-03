@@ -13,7 +13,7 @@ export default function Badge({content}) {
             className="flex flex-col p-1 items-center"
         >
             <div className="flex justify-center items-center relative  rounded-xl">
-                <img src={content.image} alt={content.badgeName} className={`w-8 h-8 ${!isValid? 'brightness-[50%]':''}`}></img>
+                <Image src={content.image} alt={content.badgeName} width={30} height={35} className={`${!isValid? 'brightness-[70%]':''}`}></Image>
                 {isVerified && (
                     <CheckBadgeIcon className="absolute -right-3 -top-1 w-4 h-4 fill-yellow-400"></CheckBadgeIcon>
                 )}
