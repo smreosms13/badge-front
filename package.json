@@ -10,15 +10,21 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.1.1",
+    "@radix-ui/react-dialog": "^1.0.5",
     "axios": "^1.6.7",
+    "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "firebase": "^10.7.2",
+    "init": "^0.1.2",
+    "lucide-react": "^0.321.0",
     "next": "14.0.4",
     "react": "^18",
     "react-datepicker": "^6.1.0",
     "react-dom": "^18",
+    "shadcn-ui": "^0.8.0",
     "tailwind-merge": "^2.2.1",
     "tailwind-scrollbar-hide": "^1.1.7",
+    "tailwindcss-animate": "^1.0.7",
     "wagmi": "^2.5.5"
   },
   "devDependencies": {
