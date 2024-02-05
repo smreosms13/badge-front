@@ -6,13 +6,16 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/Context";
+import { useState } from "react";
 
 export default function Header(){
     const { logout, currentUser } = useAuth()
     console.log(currentUser)
+    const [isLoading, setIsLoading]=useState(false)
     const router = useRouter()
     async function signOut() {
         try {
+            setIsLoading(true)
             const res = await logout()
             router.push('/')
             // toast({
@@ -24,6 +27,7 @@ export default function Header(){
 
         } catch (error) {
             console.log(error)
+            setIsLoading(false)
         }
     }
 
@@ -35,15 +39,15 @@ export default function Header(){
                 className="flex mb-1 items-center"
                 >
                 <div className="me-2 flex-initial flex justify-center items-center w-10 h-10 rounded-full bg-slate-100">
-                    {currentUser.photoURL ? (
-                        <Image src={currentUser.photoURL} alt="USER" width={50} height={50} className="rounded-full"/>
+                    {!isLoading && currentUser?.photoURL ? (
+                        <Image src={currentUser?.photoURL} alt="USER" width={50} height={50} className="rounded-full"/>
                     ): (<UserIcon className="w-6 h-6"></UserIcon>)
                     }
                     
                 </div>
                 <div className="w-fit">
                     <p className="text-xs text-slate-400 font-poppins">Welcome back</p>
-                    <p className="font-medium">{currentUser.displayName}</p>
+                    <p className="font-medium">{currentUser?.displayName}</p>
                 </div>
             </Link>
             <div className="flex">
