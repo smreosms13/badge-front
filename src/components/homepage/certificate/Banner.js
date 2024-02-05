@@ -1,16 +1,17 @@
 import Image from "next/image"
 export default function Banner({content}){
 
-    const hasTokenId = JSON.parse(content.tokenId);
+    const hasTokenId = content.tokenId;
   
     return(
       <div className="flex items-center flex-col w-full bg-cover mb-5">
         <div
           className="mt-1 flex h-32 w-full justify-center rounded-xl bg-cover"
         >
-          <div className="dark:!border-navy-700 absolute flex h-36 w-36 items-center justify-center rounded-full border-[4px] border-white bg-pink-400">
-            <img
-              className="h-full w-full rounded-full"
+          <div className="dark:!border-navy-700 absolute flex h-36 w-36 items-center justify-center rounded-full border-[5px] border-pink-200">
+            <Image
+              className="rounded-full"
+              layout="fill"
               src={content.image}
               alt={content.badgeName}
             />
@@ -23,7 +24,7 @@ export default function Banner({content}){
         </h4>
         <h5 className="text-base font-normal text-blue-600">{content.description}</h5>
       </div>
-      {hasTokenId && (
+      {hasTokenId !== "" && (
         <div className="ml-auto mt-5">
           <a 
             href={`https://sepolia.etherscan.io/tx/${content.txHash}`} 

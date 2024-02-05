@@ -4,9 +4,14 @@ const nextConfig = {
         remotePatterns: [
             {
                protocol: 'https',
-               hostname: 'lh3.googleusercontent.com',
-               pathname: '/**'
-            }
+               hostname: 'firebasestorage.googleapis.com',
+               pathname: '/v0/b/openbadges-537a3.appspot.com/**'
+            },
+            {
+                protocol: 'https',
+                hostname: 'lh3.googleusercontent.com',
+                pathname: '/**'
+             },
         ],
     }
 }

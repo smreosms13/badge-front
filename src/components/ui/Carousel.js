@@ -7,7 +7,7 @@ import { useState, useRef, useEffect } from 'react';
 const CarouselPage = ({ contents, index, CarouselComponent}) => (
     <div key={`carousel-${index}`} className="w-full snap-center shrink-0 grid grid-cols-3 grid-rows-2 gap-3">
       {contents.map((content) => (
-        <CarouselComponent key={content.badgeName} content={content}></CarouselComponent>
+        <CarouselComponent key={`${content.badgeName}-${content.id}`} content={content}></CarouselComponent>
       ))}
     </div>
 );
