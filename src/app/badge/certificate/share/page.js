@@ -6,8 +6,8 @@ import React, { useContext } from 'react';
 import Sharedimage from './sharedimage';
 import Badge from '@/components/homepage/certificate/Badge';
 
-function SharedPage() {
-  const { images, setImages } = useContext(Sharedimage);
+export default function Page(){
+    const { images, setImages } = useContext(Sharedimage);
   const [contents, setContents] = useState(null);
   const {currentUser} = useAuth();
   const [isLoading, setIsLoading] = useState(true);
@@ -43,13 +43,12 @@ function SharedPage() {
             {isLoading ? 
                 (<p>Loading...</p>) : 
                 (
-                    contents.map((content, index) => (
+                    contents.map((content, index) => (  
                         <Badge key={`${content.id}-${index}`} content={content} Onclik = {onImageClick}></Badge>
                     ))
                 )
             }
         </div>
   );
-}
 
-export default SharedPage;
+};

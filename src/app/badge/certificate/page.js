@@ -43,9 +43,9 @@ export default function Page() {
     return (
         <Sharedimage.Provider value={{ images, setImages }}> {/* ImageContext를 제공합니다. */}
             <SharedPage />
-            <Link href='./share/selectbadge'>
+            <Link href="./share/page">
                 <button style={{ backgroundColor: 'black', color: 'white' }}>
-                    {'공유할 배지 고르기'}
+                    123
                 </button>
             </Link>
            <button style={{ backgroundColor: 'black', color: 'white' }} onClick={sharePage}>{BtnName}</button>
