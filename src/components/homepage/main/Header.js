@@ -1,12 +1,23 @@
 "use client"
 
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon,Bars3Icon } from "@heroicons/react/24/outline";
 import { UserIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/Context";
 import { useState } from "react";
+import { ConnectButton } from '@rainbow-me/rainbowkit'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+  } from "@/components/ui/dropdown-menu"
+  
+
 
 export default function Header(){
     const { logout, currentUser } = useAuth()
@@ -53,16 +64,27 @@ export default function Header(){
             <div className="flex">
                 <Link
                     href='/home'
-                    className='flex justify-center items-center font-black w-8 h-8 rounded-full bg-slate-200 mb-1'
+                    className='flex justify-center items-center font-black w-8 h-8 rounded-full bg-slate-200 mb-1 mr-2'
                 >                                
                     <MagnifyingGlassIcon className="w-5 h-5"></MagnifyingGlassIcon>
                 </Link>
-                <button 
-                    className='bg-slate-400 ml-3 hover:bg-slate-500 rounded-md w-20 flex items-center justify-center p-2 text-sm cursor-pointer text-white' 
-                    onClick={() => signOut()}
-                >
-                    Log out
-                </button>  
+                <DropdownMenu>
+                <DropdownMenuTrigger>
+                    <div className="flex justify-center items-center font-black w-8 h-8 rounded-full bg-slate-200 mb-1">
+                        <Bars3Icon className="w-5 h-5"></Bars3Icon>
+                    </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                    <DropdownMenuItem
+                        className="font-medium"
+                    >
+                    <ConnectButton/>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="font-medium">
+                        <button onClick={() => signOut()}>Log out</button>
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+                </DropdownMenu>
             </div>
         </div>
     )
