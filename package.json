@@ -27,6 +27,7 @@
     "react-datepicker": "^6.1.0",
     "react-dom": "^18",
     "shadcn-ui": "^0.8.0",
+    "styled-components": "^6.1.8",
     "tailwind-merge": "^2.2.1",
     "tailwind-scrollbar-hide": "^1.1.7",
     "tailwindcss-animate": "^1.0.7",
