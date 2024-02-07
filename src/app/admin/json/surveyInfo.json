@@ -1,0 +1,53 @@
+{
+    "contents": [
+        {
+            "surveyId": 1,
+            "date": "2024-02-01",
+            "isBadgeOwner": true,
+            "institutionName": "하나 은행",
+            "image": "/hana-bank.png",
+            "surveyName": "현금자산 투자처 조사"
+          },
+          {
+            "surveyId": 2,
+            "date": "2024-02-16",
+            "isBadgeOwner": true,
+            "institutionName": "하나 은행",
+            "image": "/hana-bank.png",
+            "surveyName": "현금 자산 관리 설문조사"
+          },
+          {
+            "surveyId": 3,
+            "date": "2024-02-02",
+            "isBadgeOwner": false,
+            "institutionName": "하나 은행",
+            "image": "/hana-bank.png",
+            "surveyName": "투자 선호도 설문조사"
+          },
+          {
+            "surveyId": 4,
+            "date": "2024-02-08",
+            "isBadgeOwner": true,
+            "institutionName": "하나 은행",
+            "image": "/hana-bank.png",
+            "surveyName": "자산 분산 설문조사"
+          },
+          {
+            "surveyId": 5,
+            "date": "2024-01-17",
+            "isBadgeOwner": false,
+            "institutionName": "하나 은행",
+            "image": "/hana-bank.png",
+            "surveyName": "투자 리스크 인식 설문조사"
+          },
+          {
+            "surveyId": 6,
+            "date": "2024-02-01",
+            "isBadgeOwner": true,
+            "institutionName": "하나 은행",
+            "image": "/hana-bank.png",
+            "surveyName": "현금자산 투자처 조사"
+          }
+    ]
+}
+  
