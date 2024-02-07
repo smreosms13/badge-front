@@ -18,25 +18,12 @@ const SendButton = styled.button`
   }
 `
 
-export default function SendSurveyButton({surveys = []}){
-
+export default function SendSurveyButton({users = []}){
     const handleSurveyButton = () => {
     }
-
-    const surveyName = surveys[0]?.surveyName;  
-    const surveyCount = surveys.length; 
-    console.log(surveys)
     return(
-        <Link
-            href={{
-            pathname: "/admin/offer", 
-            query: { 
-                surveyName,
-                surveyCount
-             }, // props 
-            }}
-        >
-            <SendButton onClick={handleSurveyButton}>Continue</SendButton>
+        <Link href="/admin/offer">
+            <SendButton onClick={handleSurveyButton}>써베이 오퍼하기</SendButton>
         </Link>
     )
 }

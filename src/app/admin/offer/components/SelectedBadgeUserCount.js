@@ -1,5 +1,5 @@
 import React from 'react';
-import users from '../json/users.json'; // 사용자 데이터를 임포트합니다.
+import users from '../../json/users.json'; // 사용자 데이터를 임포트합니다.
 import styled from 'styled-components';
 
 const UserCountContainer = styled.div`

@@ -1,7 +1,9 @@
 import styled from "styled-components"
 import { useState } from "react";
 import ReactModal from "react-modal";
-import badges from "../json/badgeList.json"
+import badges from "../../json/badgeList.json"
+
+
 
 const BadgeContainer = styled.div`
     width: 335px;
@@ -9,7 +11,7 @@ const BadgeContainer = styled.div`
     padding: 10px;  
     display: flex; 
     justify-content: space-between;
-    border: 1px solid #eee; 
+    border: 1.5px solid #eee; 
     border-radius: 15px; 
 `;
 
@@ -120,11 +122,18 @@ const BadgeName = styled.span`
   /* 이름 스타일 */
 `;
 
+const custumModal = {
+    overlay: {
+        backgroundColor: 'rgba(0,0,0,0,75)'
+    },
+    content: {
+        top: '50%'
+    }
+};
 
 
 
-
-export default function SelectedBadgeContainer({ onSelectedBadges }) {
+export default function SelectedBadgeContainer() {
     const [modalIsOpen, setIsOpen] = useState(false);
     const [selectedBadges, setSelectedBadges] = useState([]);
 
@@ -138,7 +147,7 @@ export default function SelectedBadgeContainer({ onSelectedBadges }) {
     };
 
     const sendToPage = () => {
-        onSelectedBadges(selectedBadges);
+        setSelectedBadges(selectedBadges);
     }
 
     const handleBadgeClick = (badge) => {
@@ -183,6 +192,7 @@ export default function SelectedBadgeContainer({ onSelectedBadges }) {
                       isOpen={modalIsOpen}
                       onRequestClose={closeModal}
                       contentLabel="Select Badges"
+                      ariaHideApp={false}
                     >
                             <BadgeGrid>
                             {badges.map((badge, index) => (

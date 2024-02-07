@@ -2,14 +2,15 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-import Head from "next/head";
 import TopBar from "./components/TopBar";
 import SendSurveyButton from "./components/SendSurveyButton";
-import SurveyInfoForSelectedUser from "./components/SurveyInfoForSelectedUser";
+import SurveyList from "./components/SurveyList";
+import SelectedBadgeContainer from "./components/SelectedBadgeContainer"
+import SelectedBadgeUserCount from "./components/SelectedBadgeUserCount";
 
 const MainContainer = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100vh;    
   background-color: white;
   padding: 20px;
   display: flex;
@@ -19,26 +20,20 @@ const MainContainer = styled.div`
   & > *:not(:first-child) {
     margin-top: 20px;
   }
-
 `
 
 
-export default function AdminHomePage() {
-  const [selectedSurveys, setSelectedSurveys] = useState([]);
+export default function Offer() {
 
   return (
-    <div>
-      <Head>
-        <title>Admin Home</title>
-      </Head>
-
       <main>
         <MainContainer>
           <TopBar />
-          <SurveyInfoForSelectedUser selectedSurveys={selectedSurveys} setSelectedSurveys={setSelectedSurveys}/>
-          <SendSurveyButton surveys={selectedSurveys}/>
+          <SurveyList/>
+          <SelectedBadgeContainer/>
+          <SelectedBadgeUserCount/>
+          <SendSurveyButton/>
         </MainContainer>
       </main>
-    </div>
   );
 }
