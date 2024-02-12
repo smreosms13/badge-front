@@ -1,18 +1,17 @@
 "use client"
-import BadgeList from "../../../../components/homepage/certificate/BadgeList";
-import SelectBadge from "./selectbadge";
 import { useState } from "react";
+import Imageselector from "./abc";
 
 export default function Page() {
-    const [images, setImages] = useState([]);
-    const onImageClick = (imageInfo) => {
-        setImages(prevImages => [...prevImages, imageInfo]);
-      };
+  const [selectedImages, setSelectedImages] = useState(() => {
+    const savedItems = localStorage.getItem('selectedImages');
+    return savedItems ? JSON.parse(savedItems) : [];
+  });
 
 
   return (
     <>
-        <SelectBadge onImageClick={onImageClick}/>
-    </>
+    <Imageselector selectedImages={selectedImages} setSelectedImages={setSelectedImages} />
+  </>
   );
 }
