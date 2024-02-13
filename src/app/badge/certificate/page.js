@@ -45,7 +45,7 @@ export default function Page() {
                 </button>
                 
             </Link>
-            <div className = {'flex justify-center items-center relative w-20 h-20 rounded-x1 '}>
+            <div className = {'grid grid-cols-3 gap-2 h-84 overflow-y-scroll p-2 scrollbar-hide'}>
             {selectedImages.map((image, index) => (
               <div key = {index} className={`flex justify-center items-center relative w-20 h-20 rounded-xl `}>
                 <Image

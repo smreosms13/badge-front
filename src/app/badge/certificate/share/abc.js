@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useAuth } from '@/context/Context';
 import Image from "next/image";
 
+
 function Imageselector({selectedImages, setSelectedImages}){
     const [images, setImages] = useState([]);
 
@@ -31,6 +32,8 @@ function Imageselector({selectedImages, setSelectedImages}){
 
 
       const toggleImage = (image) => {
+        const isValid = JSON.parse(image.isValid);
+        const isVerified = JSON.parse(image.isVerified);
         setSelectedImages((prevSelectedImages) =>
           prevSelectedImages.includes(image)
             ? prevSelectedImages.filter((i) => i !== image)
@@ -46,7 +49,7 @@ function Imageselector({selectedImages, setSelectedImages}){
       return (
         <div>
           {/* 모든 이미지 표시 */}
-                      <div className={`flex justify-center items-center relative w-20 h-20 rounded-xl `}>
+                      <div className={`grid grid-cols-3 gap-2 h-84 overflow-y-scroll p-2 scrollbar-hide `}>
                   {images.map((image, index) => (
                 <div key={index} className={`flex justify-center items-center relative w-20 h-20 rounded-xl `}>
                   <Image
@@ -63,7 +66,7 @@ function Imageselector({selectedImages, setSelectedImages}){
 
     
           {/* 선택한 이미지만 표시 */}
-          <div className = {'flex justify-center items-center relative w-20 h-20 rounded-x1 '}>
+          <div className = {'grid grid-cols-3 gap-2 h-84 overflow-y-scroll p-2 scrollbar-hide'}>
             {selectedImages.map((image, index) => (
               <div key = {index} className={`flex justify-center items-center relative w-20 h-20 rounded-xl `}>
                 <Image
