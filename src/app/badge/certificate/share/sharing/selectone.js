@@ -1,6 +1,5 @@
 "use client"
 import React,{ useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import axios from 'axios';
 import { useAuth } from '@/context/Context';
 import Image from "next/image";
@@ -20,8 +19,10 @@ function Imageselector({selectedImages, setSelectedImages}){
           }
           const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/getAllMyVDBs`, dataToSend);
           const data = response.data
-          const contentsArray = Array.isArray(data) ? data : [data];  
-          setImages(contentsArray);
+          console.log(data);
+          setImages(data);
+
+
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -73,11 +74,12 @@ function Imageselector({selectedImages, setSelectedImages}){
         return(isValid&&isVerified);
       }
       const isValidImage = (image) => {
-        return image && image.image && image.image.length > 0;
+        return image && image.image !== "" ;
       };
       
 
       return (
+        
         <div>
           {/* 모든 이미지 표시 */}
               <div className={`grid grid-cols-3 gap-2 h-84 overflow-y-scroll p-2 scrollbar-hide `}>
@@ -95,7 +97,7 @@ function Imageselector({selectedImages, setSelectedImages}){
                       style={{ border: selectedImages.includes(image) ? '2px solid blue' : 'none' }}
                     ></Image>
                   ) : (
-                    <IdentificationIcon className="absolute w-10 h-10 fill-yellow-400"></IdentificationIcon>
+                    <IdentificationIcon className={`w-9 h-9 fill-white ${!isValid? 'brightness-[70%]':''}`}></IdentificationIcon>
                   )}
                   </div>
                   }
