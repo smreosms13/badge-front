@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { useAuth } from '@/context/Context';
 import Image from "next/image";
+import { IdentificationIcon } from '@heroicons/react/24/solid';
 
 
 function Imageselector({selectedImages, setSelectedImages}){
@@ -71,6 +72,9 @@ function Imageselector({selectedImages, setSelectedImages}){
         }
         return(isValid&&isVerified);
       }
+      const isValidImage = (image) => {
+        return image && image.image && image.image.length > 0;
+      };
       
 
       return (
@@ -79,17 +83,28 @@ function Imageselector({selectedImages, setSelectedImages}){
               <div className={`grid grid-cols-3 gap-2 h-84 overflow-y-scroll p-2 scrollbar-hide `}>
                   {images.map((image, index) => (
                 <div key={index} className={`flex justify-center items-center relative w-20 h-20 rounded-xl `}>
-                  {classification(image) && (<Image
-                    src={image.image}
-                    alt={image.badgeName}
-                    layout="fill" 
-                    className={`rounded-xl`}
-                    onClick={() => toggleImage(image)}
-                    style={{ border: selectedImages.includes(image) ? '2px solid blue' : 'none' }}
-                  ></Image>)}
+                  {classification(image) && 
+                  <div>
+                  {isValidImage(image) ? (   
+                    <Image
+                      src={image.image}
+                      alt={image.badgeName}
+                      layout="fill" 
+                      className={`rounded-xl`}
+                      onClick={() => toggleImage(image)}
+                      style={{ border: selectedImages.includes(image) ? '2px solid blue' : 'none' }}
+                    ></Image>
+                  ) : (
+                    <IdentificationIcon className="absolute w-10 h-10 fill-yellow-400"></IdentificationIcon>
+                  )}
+                  </div>
+                  }
                 </div>
               ))}
             </div>
+
+
+            
 
     
           {/* 선택한 이미지만 표시 */}
