@@ -44,14 +44,20 @@ function Imageselector({selectedImages, setSelectedImages}){
         // selectedImages 상태가 변경될 때마다 localStorage에 저장합니다.
         localStorage.setItem('selectedImages', JSON.stringify(selectedImages));
       }, [selectedImages]); // selectedImages가 변경될 때마다 이 useEffect를 실행합니다.
-      
-    
+      function classification ({image}){
+        const isValid = JSON.parse(image.isValid);
+        const isVerified = JSON.parse(image.isVerified);
+          return(isValid&&isVerified);
+      }
+
       return (
         <div>
           {/* 모든 이미지 표시 */}
                       <div className={`grid grid-cols-3 gap-2 h-84 overflow-y-scroll p-2 scrollbar-hide `}>
-                  {images.map((image, index) => (
+                  {images.filter((image) => classification(image)).map((image, index) => (
                 <div key={index} className={`flex justify-center items-center relative w-20 h-20 rounded-xl `}>
+                      const isValid = JSON.parse(image.isValid);
+                      const isVerified = JSON.parse(image.isVerified);
                   <Image
                     src={image.image}
                     alt={image.badgeName}
