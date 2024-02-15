@@ -4,7 +4,8 @@ import axios from 'axios';
 import { useAuth } from '@/context/Context';
 import Image from "next/image";
 import { IdentificationIcon } from '@heroicons/react/24/solid';
-
+import { CheckBadgeIcon } from '@heroicons/react/24/solid';
+import Link from 'next/link';
 
 function Imageselector({selectedImages, setSelectedImages}){
     const [images, setImages] = useState([]);
@@ -83,11 +84,12 @@ function Imageselector({selectedImages, setSelectedImages}){
         <div>
           {/* 모든 이미지 표시 */}
               <div className={`grid grid-cols-3 gap-2 h-84 overflow-y-scroll p-2 scrollbar-hide `}>
-                  {images.filter(classification).map((image, index) => (
+                  {images.map((image, index) => (
                 <div key={index} className={`flex justify-center items-center relative w-20 h-20 rounded-xl `}>
                 
                   <div>
                   {isValidImage(image) ? (   
+                    <>
                     <Image
                       src={image.image}
                       alt={image.badgeName}
@@ -96,6 +98,10 @@ function Imageselector({selectedImages, setSelectedImages}){
                       onClick={() => toggleImage(image)}
                       style={{ border: selectedImages.includes(image) ? '2px solid blue' : 'none' }}
                     ></Image>
+                    {JSON.parse(image.isVerified) && (
+                      <CheckBadgeIcon className="absolute -right-3 -top-1 w-6 h-6 fill-yellow-400"></CheckBadgeIcon>
+                  )}
+                  </>
                   ) : (
                     <IdentificationIcon className={`w-9 h-9 fill-white ${!isValid? 'brightness-[70%]':''}`}></IdentificationIcon>
                   )}
@@ -104,6 +110,19 @@ function Imageselector({selectedImages, setSelectedImages}){
                 </div>
               ))}
             </div>
+
+          <Link href="/badge/certificate/share/sharing">
+          <button>
+
+          fuck
+
+
+
+          </button>
+          
+          
+          
+          </Link>  
 
 
             

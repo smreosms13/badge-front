@@ -1,17 +1,26 @@
 "use client"
-import { useState } from "react";
-import Imageselector from "./selectone";
+import { useState, useEffect } from "react";
 
-export default function Page() {
-  const [selectedImages, setSelectedImages] = useState(() => {
-    const savedItems = localStorage.getItem('selectedImages');
-    return savedItems ? JSON.parse(savedItems) : [];
-  });
+export default function Goshare() {
+
+    const [selectedImages, setSelectedImages] = useState(() => {
+        const savedItems = localStorage.getItem('selectedImages');
+        console.log(savedItems);
+        return savedItems ? JSON.parse(savedItems) : [];
+      });
+
+      useEffect(() => {
+        console.log(selectedImages);
+      }, []);
+      
+
+
 
 
   return (
     <>
-    <Imageselector selectedImages={selectedImages} setSelectedImages={setSelectedImages} />
-  </>
+    g2</>
   );
 }
+
+
