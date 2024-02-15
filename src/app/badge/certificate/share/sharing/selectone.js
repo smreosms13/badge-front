@@ -19,7 +19,7 @@ function Imageselector({selectedImages, setSelectedImages}){
           }
           const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/getAllMyVDBs`, dataToSend);
           const data = response.data
-          console.log(data);
+          console.log(data[0].isValid);
           setImages(data);
 
 
@@ -83,7 +83,7 @@ function Imageselector({selectedImages, setSelectedImages}){
         <div>
           {/* 모든 이미지 표시 */}
               <div className={`grid grid-cols-3 gap-2 h-84 overflow-y-scroll p-2 scrollbar-hide `}>
-                  {images.map((image, index) => (
+                  {images.filter(classification).map((image, index) => (
                 <div key={index} className={`flex justify-center items-center relative w-20 h-20 rounded-xl `}>
                 
                   <div>
