@@ -3,7 +3,7 @@ import { ChevronLeftIcon, Bars3Icon } from "@heroicons/react/24/outline";
 
 
 export default function Header(){
-    const name ='내가 소유한 배지'
+    const name ='제목'
 
     return(
         <div className="flex mb-7 w-full">

@@ -61,20 +61,20 @@ function Imageselector({selectedImages, setSelectedImages}){
         let isValid, isVerified;
         // image 객체의 isValid 속성을 JSON.parse() 메서드에 전달하고, 오류가 발생하면 false로 설정
         try {
-          isValid = JSON.parse(image.isValid);
+          isValid = image.isValid == "true";
         } catch (err) {
           isValid = false;
         }
         // image 객체의 isVerified 속성을 JSON.parse() 메서드에 전달하고, 오류가 발생하면 false로 설정
         try {
-          isVerified = JSON.parse(image.isVerified);
+          isVerified = image.isVerified == "true";
         } catch (err) {
           isVerified = false;
         }
         return(isValid&&isVerified);
       }
       const isValidImage = (image) => {
-        return image && image.image !== "" ;
+        return image && image.image !== '' ;
       };
       
 
@@ -85,7 +85,7 @@ function Imageselector({selectedImages, setSelectedImages}){
               <div className={`grid grid-cols-3 gap-2 h-84 overflow-y-scroll p-2 scrollbar-hide `}>
                   {images.map((image, index) => (
                 <div key={index} className={`flex justify-center items-center relative w-20 h-20 rounded-xl `}>
-                  {classification(image) && 
+                
                   <div>
                   {isValidImage(image) ? (   
                     <Image
@@ -100,7 +100,7 @@ function Imageselector({selectedImages, setSelectedImages}){
                     <IdentificationIcon className={`w-9 h-9 fill-white ${!isValid? 'brightness-[70%]':''}`}></IdentificationIcon>
                   )}
                   </div>
-                  }
+                  
                 </div>
               ))}
             </div>
