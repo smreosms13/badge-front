@@ -1,15 +1,33 @@
 "use client"
 import { useState, useRef } from 'react';
-import axios from 'axios';
 import { useAuth } from '@/context/Context';
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
+import Link from 'next/link';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { storage } from '@/service/firebase'
-import { ArrowUpTrayIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
+import axios from 'axios';
+
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import { 
+    ArrowUpTrayIcon, 
+    ArrowPathIcon, 
+    CheckIcon, 
+    ExclamationTriangleIcon 
+} from "@heroicons/react/24/outline"
 import { Input, Select } from '@/components/ui/input';
+
+
 export default function IssueBadge() {
     const { currentUser } = useAuth()
     const [startDate, setStartDate] = useState(new Date());
@@ -18,7 +36,9 @@ export default function IssueBadge() {
     const [image, setImage] = useState(null)
     const [section, setSection] = useState(1)
     const [isLoading, setIsLoading] = useState(false)
-    
+    const [open, setOpen] = useState(false)
+    const [content, setContent] = useState({})
+
     const dataForm = { 
         userId:"", 
         walletAddress:"", // wagmi + rainbowkit
@@ -55,7 +75,6 @@ export default function IssueBadge() {
     const topic = useRef()
     const category = useRef()
     const badgeName = useRef()
-    
 
     const handleInputChange = (fieldName, newValue) => {
         setDataToSave((prevData)=>({
@@ -101,36 +120,43 @@ export default function IssueBadge() {
                     try {
                         console.log(dataTosave)
 
-                        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/CreateABadge`, dataTosave)
+                        const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/CreateABadge`, dataTosave)
                         setIsLoading(false)
                         document.getElementById('fileInput').value = ''
-                        alert(JSON.stringify({
+                        setContent({
                             title: "Success",
                             description: "Badge created successfully",
+                            badgeID : res.data?.badgeID,
+                            status : true,
+                        })
+                        setOpen(true)
 
-                        }))
                     } catch (error) {
                         console.log(error)
                         setIsLoading(false)
-                        alert(JSON.stringify({
+                        setContent({
                             variant: "destructive",
                             title: "Failed",
                             description: "Badge generation failed " + error,
+                            status: false
 
-                        }))
+                        })
+                        setOpen(true)
                     }
                 });
             });
         } catch (error) {
             console.log(error)
             alert('error uploading the file', error)
-            alert(JSON.stringify({
+            setContent({
                 variant: "destructive",
                 title: "Error",
                 description: "There was an error " + error,
+                status: false
 
-            }))
+            })
             setIsLoading(false)
+            setOpen(true)
         }
 
     }
@@ -309,17 +335,50 @@ export default function IssueBadge() {
                                         onClick={() => uploadNow()}
                                         className='bg-black flex  items-center justify-center space-x-2 p-4 text-white rounded-xl cursor-pointer'
                                     >
-                                        {isLoading && <ArrowPathIcon className='animate-spin' />}
+                                        {isLoading && <ArrowPathIcon className='stroke-white animate-spin' />}
                                         <p className='font-semibold'>Generate</p>
                                     </button>
                                 </div>
-
                             </div>
                         </>
-                    )
-
-                }
+                    )}
                 </div>
+                <Dialog open={open} onOpenChange={setOpen}>
+                    <DialogContent className="sm:max-w-sm">
+                        <DialogHeader className="items-center">
+                            <div className='mb-3'>
+                                {content?.status ? (
+                                        <CheckIcon className='w-8 h-8 stroke-2 stroke-green-600 rounded-full border-2 border-green-600'></CheckIcon>
+                                    ) : (
+                                        <ExclamationTriangleIcon className='w-8 h-8 stroke-2 stroke-red-600'></ExclamationTriangleIcon>
+                                    )
+                                }
+                            </div>
+                            <DialogTitle>{content?.title}</DialogTitle>
+                            <DialogDescription>{content?.description}</DialogDescription>
+                        </DialogHeader>
+                        <DialogFooter className="flex-row space-x-2 border-none">
+                            <Button type="button" variant="secondary" className="flex-1">
+                                <Link href="/home">
+                                    Home
+                                </Link>
+                            </Button>
+                            {content?.status ? (
+                                <Button type="button" className="flex-1">
+                                    <Link href={`/badge/certificate/${content?.badgeID}/detail`}>
+                                        Show detail
+                                    </Link>
+                                </Button>
+                            ) : (
+                                <Button type="button" className="flex-1" variant="destructive">
+                                    <Link href={`/badge/certificate/issue`}>
+                                        Rewrite
+                                    </Link>
+                                </Button>
+                            )}
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
             </div>
         )
     }
