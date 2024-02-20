@@ -7,7 +7,6 @@ import { IdentificationIcon } from "@heroicons/react/24/outline";
 import { useAccount, useBalance, useContractRead  } from 'wagmi';
 import { NftAddress } from '@/contractInfo/address';
 import { Abi } from '@/contractInfo/abi';
-import { useAuth } from "@/context/Context";
 import { useState } from "react";
 
 
