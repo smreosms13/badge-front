@@ -10,6 +10,23 @@ import { NftAddress } from '@/contractInfo/address';
 import { Abi } from '@/contractInfo/abi';
 import { useState } from "react";
 
+export async function ownerBadge(tokenId){
+    const uintTokenId = BigInt(tokenId)
+
+    try {
+        const data = await readContract({
+            abi: Abi,
+            address: NftAddress,
+            functionName: 'ownerOf',
+            args: [uintTokenId]
+        });
+        console.log('Load success:', data);
+        return data;
+        
+    } catch (error) {
+        console.error('Error reading contract:', error);
+    }  
+}
 
 export default function Badge({content}) {
     const [isMintedNFT, setIsMintedNFT] = useState(false);
@@ -17,32 +34,19 @@ export default function Badge({content}) {
     const isVerified = JSON.parse(content?.isVerified)
     const account = useAccount();
 
-    const ownerBadge = async () => {
-        const uintTokenId = BigInt(content?.tokenId)
-
-        try {
-            const contractRead = await readContract({
-                abi: Abi,
-                address: NftAddress,
-                functionName: 'ownerOf',
-                args: [uintTokenId]
-            });
-            console.log('Load success:', contractRead);
-    
-            if (contractRead === account?.address) {
-                setIsMintedNFT(true);
-                console.log('Owner matched')
-            } else {
-                console.log('Owner not matched');
-            }
-        } catch (error) {
-            console.error('Error reading contract:', error);
-        }  
-    }
-
     if(account?.isConnected && isVerified){
         if (content?.tokenId.length !== 0 ) {
-            ownerBadge()
+            ownerBadge(content.tokenId)
+                .then(contractRead => {
+                    console.log("contractRead", contractRead)
+                    if (contractRead === account?.address) {
+                        setIsMintedNFT(true);
+                        console.log('Owner matched')
+                    } else {
+                        console.log('Owner not matched');
+                    }
+                }
+            )
         }
     }
     
