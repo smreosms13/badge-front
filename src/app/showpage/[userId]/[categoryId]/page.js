@@ -37,35 +37,35 @@ const fetchData = async () => {
 
 
   return (
-    <main className="mx-auto max-w-sm h-dvh flex-col shadow-2xl p-6 bg-red-200">
-      <div className="my-3">
-        <Banner content={content}></Banner>
-      </div>
+  <main className="mx-auto max-w-sm h-dvh flex-col shadow-2xl p-6 bg-red-200">
+    <div className="my-3">
+      <Banner content={content}></Banner>
+    </div>
 
+    <div>
       <div>
-        <div>
-          {/* category name */}
-        </div>
-        <div>
-          {
-            badge.length !== 0 ? (
-              badge.map((item, index) => (
-                <div className="p-3 mb-3 bg-slate-200" key={index}>
-                  <h1>{item.name}</h1>
-                  <Image src={item.image} alt={item.name} width={100} height={100} />
-                </div>
-              ))
-            ) : (
-              <p>Loading...</p>
-            )
-          }
-        </div>
-        
+        {/* category name */}
+      </div>
+      <div className="flex flex-wrap">
+        {
+          badge.length !== 0 ? (
+            badge.map((item, index) => (
+              <div className="p-3 mb-3 bg-white w-1/2" key={index}>
+                <Image src={item.image} width={100} height={100} />
+              </div>
+            ))
+          ) : (
+            <p>Loading...</p>
+          )
+        }
       </div>
       
-      
-    </main>
-  );
+    </div>
+    
+    
+  </main>
+);
+
   
   
 

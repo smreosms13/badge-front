@@ -77,48 +77,58 @@ function Imageselector({selectedImages, setSelectedImages}){
       const isValidImage = (image) => {
         return image && image.image !== '' ;
       };
+
+      const CheckIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 text-green-500">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+  </svg>
+);
+
       
 
       return (
         
         <div>
           {/* 모든 이미지 표시 */}
-              <div className={`grid grid-cols-3 gap-2 h-84 overflow-y-scroll p-2 scrollbar-hide `}>
+              {/* 모든 이미지 표시 */}
+                <div className={`grid grid-cols-3 gap-2 h-84 overflow-y-scroll p-2 scrollbar-hide `}>
                   {images.map((image, index) => (
-                <div key={index} className={`flex justify-center items-center relative w-20 h-20 rounded-xl `}>
-                
-                  <div>
-                  {isValidImage(image) ? (   
-                    <>
-                    <Image
-                      src={image.image}
-                      alt={image.badgeName}
-                      layout="fill" 
-                      className={`rounded-xl`}
-                      onClick={() => toggleImage(image)}
-                      style={{ border: selectedImages.includes(image) ? '2px solid rgba(128, 128, 128, 0.5)'  : 'none' }}
-                    ></Image>
-                    {JSON.parse(image.isVerified) && (
-                      <CheckBadgeIcon className="absolute -right-3 -top-1 w-6 h-6 fill-yellow-400"></CheckBadgeIcon>
-                  )}
-                  </>
-                  ) : (
-                    <IdentificationIcon className={`w-9 h-9 fill-white ${!isValid? 'brightness-[70%]':''}`}></IdentificationIcon>
-                  )}
-                  </div>
-                  
+                    <div key={index} className={`flex justify-center items-center relative w-20 h-20 rounded-xl `}>
+                      <div>
+                        {isValidImage(image) ? (   
+                          <>
+                            <Image
+                              src={image.image}
+                              alt={image.badgeName}
+                              layout="fill" 
+                              className={`rounded-xl`}
+                              onClick={() => toggleImage(image)}
+                              style={{ border: selectedImages.includes(image) ? '2px solid rgba(128, 128, 128, 0.5)'  : 'none' }}
+                            ></Image>
+                            {JSON.parse(image.isVerified) && (
+                              <CheckBadgeIcon className="absolute -right-3 -top-1 w-6 h-6 fill-yellow-400"></CheckBadgeIcon>
+                            )}
+                            {selectedImages.includes(image) && (
+                              <CheckBadgeIcon className="absolute -right-3 -top-1 w-6 h-6 fill-yellow-400"></CheckBadgeIcon>
+                            )}
+                          </>
+                        ) : (
+                          <IdentificationIcon className={`w-9 h-9 fill-white ${!isValid? 'brightness-[70%]':''}`}></IdentificationIcon>
+                        )}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+
 
           <Link href="/badge/certificate/share/sharing">
-          <button>
+          <div className='flex items-center justify-center flex-1 bg-blue-900 rounded-3xl text-white h-12'>
 
           go to share page 
 
 
 
-          </button>
+          </div>
           
           
           
@@ -128,24 +138,8 @@ function Imageselector({selectedImages, setSelectedImages}){
             
 
     
-          {/* 선택한 이미지만 표시 */}
-          <div className = {'grid grid-cols-3 gap-2 h-84 overflow-y-scroll p-2 scrollbar-hide'}>
-            {selectedImages.map((image, index) => (
-              <div key = {index} className={`flex justify-center items-center relative w-20 h-20 rounded-xl `}>
-                <Image
-  src={image.image}
-  alt={image.badgeName}
-  layout="fill" 
-  className={`rounded-xl`}
-  onClick={() => toggleImage(image)}
-  style={{ border: selectedImages.includes(image) ? '2px solid rgba(128, 128, 128, 0.5)' : 'none' }}
-/>
-{isChecked && <div className="checkmark">✔️</div>} {/* render the checkmark if isChecked is true */}
-
-                </div>
-       
-            ))}
-          </div>
+        
+         
         </div>
       );
     

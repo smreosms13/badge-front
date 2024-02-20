@@ -48,6 +48,7 @@ export default function Goshare() {
       const data = await response.json();
       console.log(data);
       setCategoryId(data.categotyID);
+      alert('새로운 카테고리가 추가되었습니다');
 
     } catch (error) {
       console.error('Error:', error);
@@ -65,14 +66,19 @@ export default function Goshare() {
 
   return (
 <>    
-<input
-        type="text"
-        value={categoryName}
-        onChange={(e) => setCategoryName(e.target.value)}
-        placeholder="카테고리 이름을 입력하세요"
-      />
+<div className="flex items-center justify-center flex-1 bg-blue-900 rounded-3xl text-white h-12 mb-4">
+  <input 
+    type="text"
+    value={categoryName}
+    onChange={(e) => setCategoryName(e.target.value)}
+    placeholder="카테고리 이름을 입력하세요"
+    className="px-2 py-1 text-black bg-white rounded-md focus:outline-none"
+  />
+</div>
+
+
       {selectedImages.map((image, index) => (
-        <div className="flex items-center bg-gray-300 rounded-xl p-4 mb-1">   
+        <div className="flex items-center bg-gray-300 rounded-xl p-4 mb-4">   
           <div key={index} className="relative flex-initial w-24 h-20 rounded-md flex mr-3 justify-center items-center bg-white">
             <Image 
               src={image.image}
@@ -96,8 +102,8 @@ export default function Goshare() {
         
       ))}
 
-      <div className="flex items-center justify-center flex-1 bg-blue-900 rounded-3xl text-white h-12" onClick={handleButtonClick}> 카테고리 생성</div>
-      <button onClick={handleShareClick}>URL 공유하기</button> 
+      <div className="flex items-center justify-center flex-1 bg-blue-900 rounded-3xl text-white h-12 mb-4" onClick={handleButtonClick}> 카테고리 생성</div>
+      <div className= 'flex items-center justify-center flex-1 bg-blue-900 rounded-3xl text-white h-12' onClick={handleShareClick}>URL 공유하기</div> 
       
       </>
 

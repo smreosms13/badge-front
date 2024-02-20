@@ -8,13 +8,11 @@ export default function Page() {
     const savedItems = localStorage.getItem('selectedImages');
     return savedItems ? JSON.parse(savedItems) : [];
   });
-  const BtnName = "배지 공유하러 가기";
 
 
   return (
     <>
     <Imageselector selectedImages={selectedImages} setSelectedImages={setSelectedImages} />
-    <BottomButton name={BtnName}></BottomButton>
   </>
   );
 }
