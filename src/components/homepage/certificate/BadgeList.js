@@ -20,9 +20,10 @@ export default function BadgeList() {
             userId : currentUser?.uid,
         }
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/getAllMyVDBs`, dataToSend);
-        const data = response.data
-        const contentsArray = Array.isArray(data) ? data : [data];  
-        setContents(contentsArray);
+        const data = response.data.sort((a, b) => {
+          return new Date(b.issuanceDate) - new Date(a.issuanceDate)
+        })
+        setContents(data);
         setIsLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
