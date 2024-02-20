@@ -6,6 +6,10 @@ function getName(pathname){
     switch (pathname) {
         case "/badge/certificate/issue":
             return "배지 만들기";
+        case "/badge/certificate/share":
+           return "배지 공유하기";
+        case "/badge/certificate/share/sharing":
+            return "공유할 배지 선택하기"  
         case "/badge/certificate":
             return "배지 관리하기"
         case "/user/profile":
@@ -14,7 +18,7 @@ function getName(pathname){
             return "나의 이력"
         // Add more cases for other paths if needed
         default:
-            return String(pathname); // Default name
+            return "VDB Application"; // Default name
     }
 }
 
