@@ -9,6 +9,8 @@ import Link from 'next/link';
 
 function Imageselector({selectedImages, setSelectedImages}){
     const [images, setImages] = useState([]);
+    const [isChecked, setIsChecked] = useState(false);
+
 
         const {currentUser} = useAuth();
 
@@ -20,7 +22,6 @@ function Imageselector({selectedImages, setSelectedImages}){
           }
           const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/getAllMyVDBs`, dataToSend);
           const data = response.data
-          console.log(data[0].isValid);
           setImages(data);
 
 
@@ -42,14 +43,13 @@ function Imageselector({selectedImages, setSelectedImages}){
 
       const toggleImage = (image) => {
         setSelectedImages((prevSelectedImages) =>
-          // selectedImages 배열에 image의 id와 같은 id를 가진 요소가 있는지 확인
           prevSelectedImages.some((i) => compareId(i, image))
-            // 있다면, image를 제외한 나머지 요소들로 이루어진 새로운 배열을 반환
             ? prevSelectedImages.filter((i) => !compareId(i, image))
-            // 없다면, image를 포함한 새로운 배열을 반환
             : [...prevSelectedImages, image]
         );
+        setIsChecked(!isChecked); // toggle the checkmark when the image is clicked
       };
+      
 
       
       useEffect(() => {
@@ -96,7 +96,7 @@ function Imageselector({selectedImages, setSelectedImages}){
                       layout="fill" 
                       className={`rounded-xl`}
                       onClick={() => toggleImage(image)}
-                      style={{ border: selectedImages.includes(image) ? '2px solid blue' : 'none' }}
+                      style={{ border: selectedImages.includes(image) ? '2px solid rgba(128, 128, 128, 0.5)'  : 'none' }}
                     ></Image>
                     {JSON.parse(image.isVerified) && (
                       <CheckBadgeIcon className="absolute -right-3 -top-1 w-6 h-6 fill-yellow-400"></CheckBadgeIcon>
@@ -114,7 +114,7 @@ function Imageselector({selectedImages, setSelectedImages}){
           <Link href="/badge/certificate/share/sharing">
           <button>
 
-          fuck
+          go to share page 
 
 
 
@@ -133,13 +133,15 @@ function Imageselector({selectedImages, setSelectedImages}){
             {selectedImages.map((image, index) => (
               <div key = {index} className={`flex justify-center items-center relative w-20 h-20 rounded-xl `}>
                 <Image
-                  src={image.image}
-                  alt={image.badgeName}
-                  layout="fill" 
-                  className={`rounded-xl`}
-                  onClick={() => toggleImage(image)}
-                  style={{ border: selectedImages.includes(image) ? '2px solid blue' : 'none' }}
-                ></Image>
+  src={image.image}
+  alt={image.badgeName}
+  layout="fill" 
+  className={`rounded-xl`}
+  onClick={() => toggleImage(image)}
+  style={{ border: selectedImages.includes(image) ? '2px solid rgba(128, 128, 128, 0.5)' : 'none' }}
+/>
+{isChecked && <div className="checkmark">✔️</div>} {/* render the checkmark if isChecked is true */}
+
                 </div>
        
             ))}
