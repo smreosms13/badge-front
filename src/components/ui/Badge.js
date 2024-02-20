@@ -4,7 +4,8 @@ import {
     CheckBadgeIcon
 } from '@heroicons/react/24/solid';
 import { IdentificationIcon } from "@heroicons/react/24/outline";
-import { useAccount, useBalance, useContractRead  } from 'wagmi';
+import { useAccount } from 'wagmi';
+import { readContract } from "@wagmi/core";
 import { NftAddress } from '@/contractInfo/address';
 import { Abi } from '@/contractInfo/abi';
 import { useState } from "react";
@@ -16,26 +17,32 @@ export default function Badge({content}) {
     const isVerified = JSON.parse(content?.isVerified)
     const account = useAccount();
 
-    if(account?.isConnected && isVerified){
-        if (content?.tokenId.length !== 0 ) {
-            const uintTokenId = BigInt(content?.tokenId)
-        
-            //ignore problems 
-            //React Hook "useContractRead" is called conditionally. React Hooks must be called in the exact same order in every component render.
-            const contractRead = useContractRead({
+    const ownerBadge = async () => {
+        const uintTokenId = BigInt(content?.tokenId)
+
+        try {
+            const contractRead = await readContract({
                 abi: Abi,
                 address: NftAddress,
                 functionName: 'ownerOf',
-                args: [uintTokenId],
-                onSuccess(data) {
-                    console.log('Success', data);
-                    console.log('Wallet Address', account?.address)
-
-                  },
+                args: [uintTokenId]
             });
-            if(contractRead?.data === account?.address) {
+            console.log('Load success:', contractRead);
+    
+            if (contractRead === account?.address) {
                 setIsMintedNFT(true);
-            } 
+                console.log('Owner matched')
+            } else {
+                console.log('Owner not matched');
+            }
+        } catch (error) {
+            console.error('Error reading contract:', error);
+        }  
+    }
+
+    if(account?.isConnected && isVerified){
+        if (content?.tokenId.length !== 0 ) {
+            ownerBadge()
         }
     }
     
