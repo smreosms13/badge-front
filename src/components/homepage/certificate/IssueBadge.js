@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { storage } from '@/service/firebase'
 import axios from 'axios';
-
+import { useAccount } from 'wagmi';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Button } from "@/components/ui/button"
@@ -29,7 +29,8 @@ import { Input, Select } from '@/components/ui/input';
 
 
 export default function IssueBadge() {
-    const { currentUser } = useAuth()
+    const { currentUser } = useAuth();
+    const { account } = useAccount();
     const [startDate, setStartDate] = useState(new Date());
     const [selectedImage, setSelectedImage] = useState(null);
     const [selectedfile, setSelectedFile] = useState(null)
@@ -109,11 +110,11 @@ export default function IssueBadge() {
                     console.log('File available at', downloadURL);
                     setSelectedFile(downloadURL)
                     
-                    dataTosave.userId = currentUser.uid
-                    dataTosave.walletAddress=""
+                    dataTosave.userId = currentUser?.uid
+                    dataTosave.walletAddress=account?.address
                     dataTosave.walletSignature=""
                     dataTosave.image = downloadURL
-                    dataTosave.description = description.current.value
+                    dataTosave.description = description?.current.value
                     dataTosave.birthdate = startDate
 
                     // send to backend for storing
