@@ -32,7 +32,8 @@ export default function BadgeList() {
 
 
     return(
-        <div className="grid grid-cols-3 gap-2 h-84 overflow-y-scroll p-2 scrollbar-hide">
+      <div className='overflow-y-auto scrollbar-hide'>
+         <div className="grid grid-cols-3 gap-2 max-h-96 overflow-y-auto scrollbar-hide">
             {isLoading ? 
                 (<p>Loading...</p>) : 
                 (
@@ -42,5 +43,7 @@ export default function BadgeList() {
                 )
             }
         </div>
+      </div>
+       
     )
 }; 
