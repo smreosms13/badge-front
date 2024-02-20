@@ -33,7 +33,7 @@ export default function BadgeContainer({name}) {
     return(
         <>
             <div className="flex flex-col rounded-3xl h-48 bg-blue-950 p-2">
-                <div className="mb-2 text-center">
+                <div className=" text-center">
                     <p className="text-white text-lg">{name}</p>
                 </div>
                 {isLoading ?  (

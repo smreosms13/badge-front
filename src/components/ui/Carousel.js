@@ -5,7 +5,7 @@ import { useState, useRef, useEffect } from 'react';
 
 //Push the badges of badgeGroup into the Carousel component.
 const CarouselPage = ({ contents, index, CarouselComponent}) => (
-    <div key={`carousel-${index}`} className="w-full snap-center shrink-0 grid grid-cols-3 grid-rows-2 gap-3">
+    <div key={`carousel-${index}`} className="w-full snap-center shrink-0 grid grid-cols-3 grid-rows-2 gap-1 mt-2 ">
       {contents.map((content) => (
         <CarouselComponent key={`${content.badgeName}-${content.id}`} content={content}></CarouselComponent>
       ))}
