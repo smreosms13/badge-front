@@ -53,17 +53,21 @@ export default function Badge({content}) {
     return(
         <Link
             href={`/badge/certificate/${content?.id}/detail`}
-            className="flex flex-col p-1 items-center"
+            className="flex flex-col items-center"
         >
-            <div className="flex justify-center items-center relative  rounded-xl">
-                {content.image !== "" ? (
-                        <Image src={content?.image} alt={content.badgeName} width={30} height={35} className={`${!isValid? 'brightness-[70%]':''}`}/>) 
+            <div className={`flex justify-center items-center relative w-16 h-20 `}>
+                    {content?.image !== "" ? (
+                        <>
+                            <Image src={content.image} alt={content.badgeName} layout="fill" className=""></Image>
+                            {isValid && (
+                                <CheckBadgeIcon className={`absolute -right-4 -top-[6px] w-5 h-5 ${isMintedNFT ? 'fill-yellow-400' : 'fill-blue-400'}`}></CheckBadgeIcon>
+                            )}
+                        </>
+                    ) 
                     : (
-                        <IdentificationIcon className={`w-9 h-9 fill-white ${!isValid? 'brightness-[70%]':''}`}></IdentificationIcon>
+                        <IdentificationIcon className={`w-12 h-12 fill-white`}></IdentificationIcon>
                     )}
-                {isMintedNFT && (
-                    <CheckBadgeIcon className="absolute -right-3 -top-1 w-4 h-4 fill-yellow-400"></CheckBadgeIcon>
-                )}
+
             </div>
                 
             <div>
