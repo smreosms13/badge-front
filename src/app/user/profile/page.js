@@ -21,10 +21,10 @@ const myStory = [
 export default function Profile() {
     const name = 'My Story';
     return(
-        <div className="mx-auto max-w-sm h-dvh flex flex-col shadow-2xl p-6 bg-white">
+        <>
             <Banner content={userMock}></Banner>
             <Table content={userMock}></Table>
             <CardList name={name} contents={myStory} CustomCard={LinkCard}></CardList>
-        </div>
+        </>
     )
 }
