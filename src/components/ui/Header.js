@@ -6,7 +6,7 @@ export default function Header(){
     const name ='제목'
 
     return(
-        <div className="flex mb-7 w-full">
+        <div className="flex mb-3 w-full">
             <Link
                 href='/home'
                 className='flex-initial flex justify-center items-center font-black w-8 h-8 rounded-full bg-slate-100 mb-1'

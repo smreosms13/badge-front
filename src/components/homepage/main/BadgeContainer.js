@@ -21,7 +21,9 @@ export default function BadgeContainer({name}) {
                 userId : currentUser?.uid
             }
             const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/getAllMyVDBs`, dataToSend );
-            const data = response.data
+            const data = response.data.sort((a, b) => {
+                return new Date(b.issuanceDate) - new Date(a.issuanceDate)
+            })
             setContents(data);
             setIsLoading(false);
         } catch (error) {
@@ -31,7 +33,7 @@ export default function BadgeContainer({name}) {
     return(
         <>
             <div className="flex flex-col rounded-3xl h-48 bg-blue-950 p-2">
-                <div className="mb-2 text-center">
+                <div className=" text-center">
                     <p className="text-white text-lg">{name}</p>
                 </div>
                 {isLoading ?  (
