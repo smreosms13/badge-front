@@ -4,6 +4,7 @@ import Badge from '@/components/ui/Badge';
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/Context';
 import axios from 'axios';
+import { ArrowPathIcon } from '@heroicons/react/24/solid';
 
 export default function BadgeContainer({name}) {
     const [isLoading, setIsLoading] = useState(true);
@@ -37,7 +38,9 @@ export default function BadgeContainer({name}) {
                     <p className="text-white text-lg">{name}</p>
                 </div>
                 {isLoading ?  (
-                        <p className='text-white text-lg text-center'>Loading....</p>
+                        <div className='flex justify-center items-center min-h-40'>
+                            <ArrowPathIcon className='w-16 h-16 animate-spin fill-white'></ArrowPathIcon>
+                        </div>
                     ) : (
                     (contents.length !== 0 ) ? (
                         <CarouselContainer contents={contents} CarouselComponent={Badge} />
