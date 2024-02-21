@@ -7,7 +7,6 @@ import {
     ArchiveBoxIcon,
 } from '@heroicons/react/24/outline';
 
-// move to dummy pages
 const links = [
     {name:'배지 만들기', href: '/badge/certificate/issue', icon:PlusCircleIcon},
     {name:'배지 공유하기', href: '/badge/certificate/share', icon:ShareIcon},
