@@ -82,7 +82,7 @@ function Imageselector({ selectedImages, setSelectedImages }) {
 
             <Link href="/badge/certificate/share/sharing">
                 <div className='flex items-center justify-center flex-1 bg-blue-900 rounded-3xl text-white h-12'>
-                    go to share page
+                    링크 공유하러 가기
                 </div>
             </Link>
         </div>
