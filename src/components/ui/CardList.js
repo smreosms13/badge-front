@@ -4,11 +4,11 @@ export default function CardList({name, contents, CustomCard}) {
     return(
         <div className="flex flex-col">
             {name && (
-                <div className="my-3 font-medium text-lg">
+                <div className="my-1 font-medium text-lg">
                     <p>{name}</p>
                 </div>
             )}
-            <div className="h-64 overflow-y-scroll p-2 scrollbar-hide">
+            <div className="h-56 overflow-y-scroll p-2 scrollbar-hide">
                 {contents.map((content) => (
                     <CardComponent key={content.subject} content={content}></CardComponent>
                 ))}

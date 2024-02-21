@@ -1,11 +1,9 @@
 "use client"
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/Context';
 
 export default function Goshare() {
-    const router = useRouter();
     const { currentUser } = useAuth();
     const [categoryName, setCategoryName] = useState('');
     const [categoryId, setCategoryId] = useState('');
