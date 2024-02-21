@@ -1,4 +1,4 @@
-
+"use client"
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '@/context/Context';
@@ -8,10 +8,11 @@ import { CheckBadgeIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 
 
-function Imageselector({ selectedImages, setSelectedImages }) {
+function Imageselector() {
     const [images, setImages] = useState([]);
     const [isChecked, setIsChecked] = useState(false);
     const { currentUser } = useAuth();
+    const [selectedImages, setSelectedImages] = useState([]);
 
     const fetchData = async () => {
         try {
@@ -55,11 +56,9 @@ function Imageselector({ selectedImages, setSelectedImages }) {
     return (
         <div>
             <div className={`grid grid-cols-3 gap-2 h-84 overflow-y-scroll p-2 scrollbar-hide `}>
-                {classificationImage.map((image, index) => (
+                {classificationImage.filter(isValidImage).map((image, index) => (
                     <div key={index} className={`flex justify-center items-center relative w-20 h-20 rounded-xl `}>
                         <div>
-                            {isValidImage(image) ? (
-                                <>
                                     <Image
                                         src={image.image}
                                         alt={image.badgeName}
@@ -71,10 +70,6 @@ function Imageselector({ selectedImages, setSelectedImages }) {
                                     {selectedImages.includes(image) && (
                                         <CheckBadgeIcon className="absolute -right-3 -top-1 w-6 h-6 fill-blue-400"></CheckBadgeIcon>
                                     )}
-                                </>
-                            ) : (
-                                <IdentificationIcon className={`w-9 h-9`}></IdentificationIcon>
-                            )}
                         </div>
                     </div>
                 ))}
