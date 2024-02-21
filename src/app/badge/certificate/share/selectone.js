@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '@/context/Context';
@@ -5,6 +6,7 @@ import Image from "next/image";
 import { IdentificationIcon } from '@heroicons/react/24/solid';
 import { CheckBadgeIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
+
 
 function Imageselector({ selectedImages, setSelectedImages }) {
     const [images, setImages] = useState([]);
@@ -39,6 +41,9 @@ function Imageselector({ selectedImages, setSelectedImages }) {
                 : [...prevSelectedImages, image]
         );
         setIsChecked(!isChecked);
+    };
+    const isValidImage = (image) => {
+      return image && image.image !== '' ;
     };
 
     useEffect(() => {
@@ -77,7 +82,7 @@ function Imageselector({ selectedImages, setSelectedImages }) {
 
             <Link href="/badge/certificate/share/sharing">
                 <div className='flex items-center justify-center flex-1 bg-blue-900 rounded-3xl text-white h-12'>
-                    go to share page
+                    링크 공유하러 가기
                 </div>
             </Link>
         </div>
