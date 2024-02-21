@@ -8,10 +8,11 @@ import { CheckBadgeIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 
 
-function Imageselector({ selectedImages, setSelectedImages }) {
+function Imageselector() {
     const [images, setImages] = useState([]);
     const [isChecked, setIsChecked] = useState(false);
     const { currentUser } = useAuth();
+    const [selectedImages, setSelectedImages] = useState();
 
     const fetchData = async () => {
         try {

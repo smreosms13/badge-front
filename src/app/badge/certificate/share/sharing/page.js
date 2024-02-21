@@ -78,7 +78,7 @@ export default function Goshare() {
 
 
       {selectedImages.map((image, index) => (
-        <div className="flex items-center bg-gray-300 rounded-xl p-4 mb-4">   
+        <div key = {index} className="flex items-center bg-gray-300 rounded-xl p-4 mb-4">   
           <div key={index} className="relative flex-initial w-24 h-20 rounded-md flex mr-3 justify-center items-center bg-white">
             <Image 
               src={image.image}
