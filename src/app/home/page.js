@@ -19,7 +19,7 @@ export default function Page() {
   const [modalOpened, setModalOpened] = useState()
 
   useEffect(() => {
-    if (currentUser && account?.isDisconnected && !modalOpened) {
+    if (openConnectModal && account?.isDisconnected && !modalOpened) {
       openConnectModal();
       setModalOpened(true);
     }
