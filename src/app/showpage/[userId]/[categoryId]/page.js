@@ -16,7 +16,7 @@ import {
 
 export default function Page() {
   const [badges, setBadges] = useState([]);
-  const [userInfo, setUserInfo] = useState();
+  const [userInfo, setUserInfo] = useState({});
   const [category, setCategoryInfo] = useState([]);
   const params = useParams();
   const userId = decodeURIComponent(params.userId);
@@ -45,13 +45,13 @@ export default function Page() {
       <div className="my-3">
         <div className="flex items-center flex-col w-full bg-cover">
               <div className="dark:!border-navy-700 flex h-[110px] w-[110px] items-center justify-center rounded-full border-[4px] border-white bg-pink-400">
-                { Object.keys(userInfo).length !== 0} && <Image
+                { Object.keys(userInfo).length !== 0 && <Image
                   className="rounded-full"
                   src={userInfo?.imageUrl}
                   alt={userInfo?.name}
                   width={100}
                   height={100}
-                />
+                />}
               </div>
           <div className="bg-red-100 m-3 p-3 rounded-md w-full text-center">
             <h4 className="text-gray-700 text-xl font-bold">
