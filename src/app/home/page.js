@@ -45,7 +45,7 @@ export default function Page() {
     if (isNewUser) {
       setGuideOpened(true);
     } 
-    if (openConnectModal && account?.isDisconnected && !modalOpened && guideOpened) { 
+    if (currentUser && openConnectModal && account?.isDisconnected && !modalOpened) { 
       openConnectModal();
       setModalOpened(true)
     }
