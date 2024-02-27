@@ -59,7 +59,7 @@ export default function Page() {
         <BtnNav/>
         <VoucherList />
 
-        {!guideOpened} && (
+        {!guideOpened && (
           <Dialog open={guideOpened} onOpenChange={setGuideOpened}>
             <DialogContent className="max-w-sm">
                 <DialogHeader className="items-center">
@@ -89,7 +89,7 @@ export default function Page() {
                 </DialogFooter>
             </DialogContent>
           </Dialog>
-        )
+        )}
       </main>
     );
   } else {
