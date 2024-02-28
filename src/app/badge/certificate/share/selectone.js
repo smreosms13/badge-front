@@ -82,7 +82,7 @@ function Imageselector() {
                     </div>
                 ))}
             </div>
-
+             {/* link share button */}                       
             <Link href="/badge/certificate/share/sharing">
                 <div className='flex items-center justify-center bg-blue-900 rounded-3xl text-white h-12'>
                     배지 컬렉션 공유하기

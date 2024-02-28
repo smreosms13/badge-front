@@ -55,6 +55,7 @@ export default function Goshare() {
 
     return (
         <>
+        {/* make collection button*/}
             <div className="flex mb-4 h-11">
                 <div className="flex items-center justify-center flex-1 bg-blue-600 rounded-2xl mr-3 px-5">
                     <input
@@ -71,6 +72,7 @@ export default function Goshare() {
                         </svg>
                 </button>
             </div>
+            {/* show selected badge list */}
             <div className="h-[28rem] overflow-y-scroll p-2 scrollbar-hide">
                 {selectedImages.map((image, index) => (
                     <div key={index} className="flex items-center bg-gray-200 rounded-xl p-4 mb-4">
@@ -92,6 +94,9 @@ export default function Goshare() {
                     </div>
                 ))}
             </div>
+            {/* sharing link button
+                to  showpage/userId/categoryid
+                */}
             <button className='cursor-pointer flex items-center justify-center w-full bg-blue-900 rounded-3xl text-white h-12' onClick={handleShareClick}>배지 컬렉션 URL 공유하기</button>
         </>
     );
