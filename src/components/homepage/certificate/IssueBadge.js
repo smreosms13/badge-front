@@ -11,6 +11,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { Button } from "@/components/ui/button"
+import { Input, Select } from '@/components/ui/input';
 import {
   Dialog,
   DialogClose,
@@ -20,72 +21,31 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
+
 import { 
     ArrowUpTrayIcon, 
     ArrowPathIcon, 
     CheckIcon, 
     ExclamationTriangleIcon 
 } from "@heroicons/react/24/outline"
-import { Input, Select } from '@/components/ui/input';
 
 const genderOptions = [
-    {
-        value:"M",
-        disabled: false
-        
-    },
-    {
-        value:"F",
-        disabled: false
-        
-    },
-    {
-        value:"X",
-        disabled: false
-        
-    },
+    { value:"M", disabled: false },
+    { value:"F", disabled: false },
+    { value:"X", disabled: false },
 ]; 
-const categoryOptions = [
-    {
-        value:"이력",
-        disabled: false
-        
-    },
-    {
-        value:"건강",
-        disabled: true
-        
-    },
-    {
-        value:"게임",
-        disabled: true
-        
-    },
-    {
-        value:"신용",
-        disabled: true
-        
-    },
 
+const categoryOptions = [
+    { value:"이력", disabled: false },
+    { value:"건강", disabled: true  },
+    { value:"게임", disabled: true  },
+    { value:"신용", disabled: true  },
 ]; 
 
 const badgeTypeOptions = [
-    {
-        value:"Standard",
-        disabled: false
-        
-    },
-    {
-        value:"NFT",
-        disabled: false
-        
-    },
-    {
-        value:"Utility",
-        disabled: false
-        
-    }
-
+    { value:"Standard", disabled: false },
+    { value:"NFT", disabled: false },
+    { value:"Utility", disabled: false }
 ]
 
 export default function IssueBadge() {
@@ -114,9 +74,10 @@ export default function IssueBadge() {
         image: "",
         badgeName: "",
         category:"이력",     // 이력, 건강, 게임, 신용, (prototype - defalt=이력)
-        badgetype:"", // Standard , NFT, Utilities etc ...
+        badgetype:"",       // Standard , NFT, Utilities etc ...
         subject: "",
         description: "",
+        
         // 이하 불필요.
         level:"",
         skills:"",
@@ -264,10 +225,6 @@ export default function IssueBadge() {
                                         onChange={(date) => {setStartDate(date)}}
                                         className='appearance-none p-2 w-full border rounded-xl mt-1 ring-0 focus-visible:bg-none focus:outline-none'
                                     />
-                                    {/* 
-                                        prototype - 수취인 소속 = default 고려대학교  
-                                        User 정보 저장 기능 개발시 불필요
-                                    */}
                                     {/* 
                                     <Input
                                         required 
