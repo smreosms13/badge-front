@@ -6,7 +6,7 @@ import { useAuth } from '@/context/Context';
 import axios from 'axios';
 import { ArrowPathIcon } from '@heroicons/react/24/solid';
 
-export default function BadgeContainer({name}) {
+export default function BadgeContainer() {
     const [isLoading, setIsLoading] = useState(true);
     const { currentUser } = useAuth();
     const [contents, setContents] = useState([]);
@@ -35,7 +35,7 @@ export default function BadgeContainer({name}) {
         <>
             <div className="flex flex-col rounded-3xl h-52 bg-blue-950 p-2">
                 <div className=" text-center">
-                    <p className="text-white text-lg">{name}</p>
+                    <p className="text-white text-lg">디지털 배지</p>
                 </div>
                 {isLoading ?  (
                         <div className='flex justify-center items-center min-h-40'>
