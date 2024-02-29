@@ -1,7 +1,8 @@
 import Table from "@/components/homepage/profile/Table";
-import LinkCard from "@/components/homepage/profile/LinkCard";
-import Banner from "@/components/homepage/profile/Banner";
 import CardList from "@/components/ui/CardList";
+import Link from "next/link";
+import { ChevronRightIcon } from "@heroicons/react/24/outline";
+
 const userMock = { 
     name: "Adela Parkson", 
     email: "adelaPakerson@gmail.com", 
@@ -18,11 +19,23 @@ const myStory = [
     {subject: '게임 이력', href:'/user/mystory',},
 ];
 
+const LinkCard = ({ content }) => {
+    return (
+        <Link
+            href={content.href}
+            name={content.subject}
+            className="flex justify-between border mb-1 p-2 items-center"
+        >
+            <p className="font-medium text-sm">{content.subject}</p>
+            <ChevronRightIcon className="flex-initial w-5 h-5 stroke-slate-600" />
+        </Link>
+    );
+};
+
 export default function Profile() {
     const name = 'My Story';
     return(
         <>
-            <Banner content={userMock}></Banner>
             <Table content={userMock}></Table>
             <CardList name={name} contents={myStory} CustomCard={LinkCard}></CardList>
         </>
