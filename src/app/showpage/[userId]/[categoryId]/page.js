@@ -90,7 +90,7 @@ export default function Page() {
                           </div>
                           <div className="flex-1 justify-center">
                               <div className="font-semibold">
-                                  <p className="text-sm text-muted-foreground">{badge?.dataBadgeClaim?.badgeType}</p>
+                                  <p className="text-sm">{badge?.dataBadgeClaim?.type}</p>
                                   <p className="text-md text-muted-foreground">{badge?.dataBadgeClaim?.subject}</p>
                                   <p className="text-sm text-muted-foreground">{badge?.dataBadgeClaim?.description}</p>
                               </div>
