@@ -1,8 +1,10 @@
 "use client"
-import BadgeContainer from "@/components/homepage/main/BadgeContainer";
-import BtnNav from "@/components/homepage/main/BtnNav";
-import VoucherList from "@/components/homepage/main/VoucherList";
-import Header from "@/components/homepage/main/Header";
+
+import { useAuth } from "@/context/Context";
+import { useRouter } from "next/navigation";
+import { useAccount } from "wagmi";
+import { useConnectModal} from '@rainbow-me/rainbowkit';
+import { useState, useEffect } from "react";
 
 import {
   Dialog,
@@ -13,22 +15,20 @@ import {
   DialogTitle,
   DialogClose
 } from "@/components/ui/dialog";
-
+import { Button } from "@/components/ui/button";
 import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
-  } from "@/components/ui/carousel-shadcn";
-import { Button } from "@/components/ui/button"
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
-
-import { useAuth } from "@/context/Context";
-import { useRouter } from "next/navigation";
-import { useAccount } from "wagmi";
-import { useConnectModal} from '@rainbow-me/rainbowkit';
-import { useState, useEffect } from "react";
+import BadgeContainer from "@/components/homepage/main/BadgeContainer";
+import BtnNav from "@/components/homepage/main/BtnNav";
+import VoucherList from "@/components/homepage/main/VoucherList";
+import Header from "@/components/homepage/main/Header";
+import { guideContents } from "@/components/homepage/guide/GuideContents";
 
 export default function Page() {
   const { currentUser } = useAuth();
@@ -48,7 +48,7 @@ export default function Page() {
   useEffect(() => {
     // isNewUser, isGuideOpened의 값이 변화할 때 
     // 신규 유저이면서 유저 가이드를 보지 않았다면 가이드 모달 열기
-    if(!isNewUser && !isGuideOpened){
+    if(isNewUser && !isGuideOpened){
       setGuideOpen(true);
       console.log("1 isGuideOpened", isGuideOpened)
     }
@@ -57,6 +57,7 @@ export default function Page() {
       localStorage.setItem('isGuideOpened', JSON.stringify(isGuideOpened));
     };
   }, [isNewUser, isGuideOpened]);
+  
   useEffect(() => {
     console.log("2 isGuideOpened", isGuideOpened)
     // isGuideOpened가 true이고, isConnectOpened가 false이며, 계정이 연결되지 않은 경우에만 실행
@@ -70,25 +71,24 @@ export default function Page() {
   if(currentUser){
     return (
       <main className="mx-auto max-w-sm h-dvh grid gap-3 shadow-2xl p-6 bg-white">
-        {!isNewUser && (
+        {isNewUser && (
           <Dialog open={guideOpen} onOpenChange={setGuideOpen}>
             <DialogContent className="max-w-sm">
                 <DialogHeader className="items-center">
-                    <div className='mb-3'></div>
-                    <DialogTitle>USER GUIDE</DialogTitle>
-                    <DialogDescription>나만의 Digital Badge를 만들고 공유해보자!</DialogDescription>
+                    <DialogTitle>고려대학교 디지털배지</DialogTitle>
+                    <DialogDescription className="font-semibold">나만의 Digital Badge를 만들고 공유해보자!</DialogDescription>
                 </DialogHeader>
-                <Carousel className="w-full max-w-xs">
+                  <Carousel className="w-full max-w-xs">
                     <CarouselContent>
-                        {Array.from({ length: 5 }).map((_, index) => (
-                        <CarouselItem key={index}>
-
-                        </CarouselItem>
+                        {guideContents.map((content, index) => (
+                            <CarouselItem key={index+1}>
+                              {content}  
+                            </CarouselItem>
                         ))}
                     </CarouselContent>
                     <CarouselPrevious />
                     <CarouselNext />
-                </Carousel>
+                  </Carousel>
                 <DialogFooter className="flex-row space-x-2 border-none">
                   <DialogClose asChild>
                     <Button type="button" className="flex-1" onClick={()=> {setIsGuideOpened(true)}}>시작하기</Button>
