@@ -5,7 +5,7 @@ import { useAuth } from '@/context/Context';
 import Image from "next/image";
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
-
+    {/* 공유할 이미지 선택하는 page */}
 
 function Imageselector() {
     const [images, setImages] = useState([]);
@@ -13,6 +13,10 @@ function Imageselector() {
     const { currentUser } = useAuth();
     const [selectedImages, setSelectedImages] = useState([]);
 
+    {/* api: getALLMyVDBs 
+        모든 배지 가져오기
+        datatosend : currentuserid
+    */}
     const fetchData = async () => {
         try {
             const dataToSend = {
@@ -29,11 +33,15 @@ function Imageselector() {
     useEffect(() => {
         fetchData();
     }, []);
+    {/* local data 중복 방지 */}
 
     const compareId = (image1, image2) => {
         return image1.id === image2.id;
     };
 
+    {/* onclick function
+        image selection
+    */}
     const toggleImage = (image) => {
         setSelectedImages((prevSelectedImages) =>
             prevSelectedImages.some((i) => compareId(i, image))
@@ -42,6 +50,7 @@ function Imageselector() {
         );
         setIsChecked(!isChecked);
     };
+    
     const isValidImage = (image) => {
       return image && image.image !== '' ;
     };
@@ -50,7 +59,7 @@ function Imageselector() {
         localStorage.setItem('selectedImages', JSON.stringify(selectedImages));
     }, [selectedImages]);
 
-    // Verified, Valid badge만 공유 가능하도록 filtering
+    {/* Verified, Valid badge만 공유 가능하도록 filtering */}
     const classificationImage = images.filter((image) => (image.isValid === "true") && (image.isVerified === "true"));
 
     return (

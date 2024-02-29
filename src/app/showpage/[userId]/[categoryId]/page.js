@@ -13,6 +13,8 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
+{/* 공유된 page 자랑용 page
+로그인 없이 접속가능해야함 */}
 
 export default function Page() {
   const [badges, setBadges] = useState([]);
@@ -26,7 +28,8 @@ export default function Page() {
   useEffect(() => {
     fetchData();
   }, []);
-
+  {/* api : getSingleCategoryByUserID
+      datatosend : userid, categoryid */}
   const fetchData = async () => {
     try {
         const response = await axios.post(apiUrl);
@@ -42,6 +45,7 @@ export default function Page() {
 
   return (
     <main className="mx-auto max-w-sm h-dvh flex-col shadow-2xl p-6 bg-red-200 overflow-y-scroll scrollbar-hide">
+      {/* userinfomation show */}
       <div className="my-3">
         <div className="flex items-center flex-col w-full bg-cover">
               <div className="dark:!border-navy-700 flex h-[110px] w-[110px] items-center justify-center rounded-full border-[4px] border-white bg-pink-400">
@@ -62,6 +66,7 @@ export default function Page() {
         </div>
       </div>
       <div className="flex-col">
+        {/* userbadge show */}
         <div className="flex flex-wrap">
           {
             badges?.length !== 0 ? (
