@@ -1,4 +1,4 @@
-import BottomButton from '@/components/ui/BottomButton'; 
+import Link from 'next/link';
 import BadgeList from '@/components/homepage/certificate/BadgeList';
 import CategoryContainer from '@/components/homepage/certificate/CategoryContainer';
 
@@ -18,7 +18,14 @@ export default function Page() {
         <>
             <CategoryContainer contents={categoryMock}></CategoryContainer>
             <BadgeList></BadgeList>
-            <BottomButton name={BtnName}></BottomButton>
+            <div className="mt-5 w-full flex items-center">
+                <Link 
+                    name={BtnName}
+                    href='/badge/certificate/issue'
+                    className="flex items-center justify-center flex-1 bg-blue-900 rounded-3xl text-white h-12 hover:bg-blue-800">
+                    <div>{BtnName}</div>
+                </Link>
+            </div>
         </>
 
     );

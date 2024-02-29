@@ -3,30 +3,50 @@ import { useState, useRef } from 'react';
 import { useAuth } from '@/context/Context';
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import Link from 'next/link';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
-import { storage } from '@/service/firebase'
-import axios from 'axios';
 import { useAccount } from 'wagmi';
+import { storage } from '@/service/firebase'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import axios from 'axios';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
 import { Button } from "@/components/ui/button"
+import { Input, Select } from '@/components/ui/input';
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
+
 import { 
     ArrowUpTrayIcon, 
     ArrowPathIcon, 
     CheckIcon, 
     ExclamationTriangleIcon 
 } from "@heroicons/react/24/outline"
-import { Input, Select } from '@/components/ui/input';
 
+const genderOptions = [
+    { value:"M", disabled: false },
+    { value:"F", disabled: false },
+    { value:"X", disabled: false },
+]; 
+
+const categoryOptions = [
+    { value:"이력", disabled: false },
+    { value:"건강", disabled: true  },
+    { value:"게임", disabled: true  },
+    { value:"신용", disabled: true  },
+]; 
+
+const badgeTypeOptions = [
+    { value:"Standard", disabled: false },
+    { value:"NFT", disabled: false },
+    { value:"Utility", disabled: false }
+]
 
 export default function IssueBadge() {
     const { currentUser } = useAuth();
@@ -40,40 +60,40 @@ export default function IssueBadge() {
     const [open, setOpen] = useState(false)
     const [content, setContent] = useState({})
 
-    const dataForm = { 
-        userId:"", 
-        walletAddress:"", // wagmi + rainbowkit
+    //level, topic, skills, grade가 없어도록 Create 가능하도록
+    // 아래 백엔드 API(CreateABadge) 수정 필요. 
+    const dataDefault = { 
+        userId: currentUser?.uid,
+        walletAddress: "", 
         walletSignature:"", // wagmi + rainbowkit
-        name: "",
-        description: "",
-        email:"",
-        affiliation:"",
-        birthdate:"",
+        name: currentUser?.displayName,
+        email: currentUser?.email,
+        affiliation:"고려대학교",  // (prototype - defalt=고려대학교)
         gender:"",
-        badgetype: "",
-        subject: [], // ["1","2","3",..."n"]
-        skills: "",
-        grade: "",
-        level: "",
+        birthdate:"",
         image: "",
         badgeName: "",
+        category:"이력",     // 이력, 건강, 게임, 신용, (prototype - defalt=이력)
+        badgetype:"",       // Standard , NFT, Utilities etc ...
+        subject: "",
+        description: "",
+        
+        // 이하 불필요.
+        level:"",
+        skills:"",
         topic:"",
-        category:"", // Standard , NFT, etc ...
-    }
+        grade:"" ,
+    };
 
-    const [dataTosave, setDataToSave] = useState(dataForm)
+    const [dataTosave, setDataToSave] = useState(dataDefault)
     const router = useRouter()
     const nameRef = useRef()
     const emailRef = useRef()
-    const affiliationRef = useRef()
+    // const affiliationRef = useRef()
     const badgeType = useRef()
     const subject = useRef()
     const description = useRef()
-    const skills = useRef()
-    const grade = useRef()
-    const level = useRef()
     const gender = useRef()
-    const topic = useRef()
     const category = useRef()
     const badgeName = useRef()
 
@@ -108,11 +128,10 @@ export default function IssueBadge() {
 
                 getDownloadURL(snapshot.ref).then(async (downloadURL) => {
                     console.log('File available at', downloadURL);
-                    setSelectedFile(downloadURL)
-                    
-                    dataTosave.userId = currentUser?.uid
-                    dataTosave.walletAddress=account?.address
-                    dataTosave.walletSignature=""
+                    setSelectedFile(downloadURL);
+
+                    dataTosave.walletAddress=account?.address || "";
+                    // dataTosave.walletSignature=""
                     dataTosave.image = downloadURL
                     dataTosave.description = description?.current.value
                     dataTosave.birthdate = startDate
@@ -138,7 +157,7 @@ export default function IssueBadge() {
                         setContent({
                             variant: "destructive",
                             title: "Failed",
-                            description: "Badge generation failed " + error,
+                            description: "Badge generation failed ",
                             status: false
 
                         })
@@ -148,11 +167,10 @@ export default function IssueBadge() {
             });
         } catch (error) {
             console.log(error)
-            alert('error uploading the file', error)
             setContent({
                 variant: "destructive",
                 title: "Error",
-                description: "There was an error " + error,
+                description: "There was an error to upload the image file",
                 status: false
 
             })
@@ -170,48 +188,53 @@ export default function IssueBadge() {
                     { (section === 1) ? 
                         (   
                             <>
-                                <div className='mb-5'>
-                                    <p className='text-xl font-semibold'>Create a badge</p>
-                                    <p className='mt-2 text-md text-gray-600'>Once created, the badge will be verified and approved by the admin prior being issued to the receipient</p>
+                                <div className='mb-5 text-center'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="gray" className="w-7 h-7 mx-auto">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                                    </svg>
+                                    <p className='text-md text-gray-500'>생성된 배지는 관리자에 의해 승인된 후</p>
+                                    <p className='text-md text-gray-500'>수취인에게 발급됩니다</p>
                                 </div>
                                 <div className='flex flex-col space-y-3'>
-                                    <p className='underline underline-offset-2 font-bold text-lg text-gray-600 mb-2'>Issueing to</p>
+                                    <p className='underline underline-offset-2 font-bold text-lg text-gray-600 mb-2'>배지 수취인</p>
                                     <Input 
                                         inputRef={nameRef} 
                                         type='text' 
-                                        placeholder='Receipient Name' 
+                                        placeholder={dataTosave.name} 
                                         value={dataTosave.name} 
                                         onChange={(newValue) => handleInputChange("name", newValue)}
                                     />
                                     <Input 
                                         inputRef={emailRef} 
                                         type='email' 
-                                        placeholder='Receipient Email' 
+                                        placeholder={dataTosave.email} 
                                         value={dataTosave.email} 
                                         onChange={(newValue) => handleInputChange("email", newValue)}
                                     />
-                                    <Input 
-                                        inputRef={affiliationRef}
-                                        type='text' 
-                                        placeholder='Affiliation' 
-                                        value={dataTosave.affiliation} 
-                                        onChange={(newValue) => handleInputChange("affiliation", newValue)}
-                                    />
                                     <Select 
                                         selectRef={gender}
-                                        defaultValue="Select gender"
+                                        defaultValue="성별"
                                         onChange={(newValue)=>handleInputChange("gender", newValue)} 
-                                        options={["M", "F", "X"]}
+                                        options={genderOptions}
                                     >
                                     </Select>
-                                    
-                                    <p className='mt-4 '>Receipient Date of birth</p>
+                                    <p className='mt-4 '>생년월일</p>
                                     <DatePicker
                                         required
                                         selected={startDate}
                                         onChange={(date) => {setStartDate(date)}}
                                         className='appearance-none p-2 w-full border rounded-xl mt-1 ring-0 focus-visible:bg-none focus:outline-none'
                                     />
+                                    {/* 
+                                    <Input
+                                        required 
+                                        inputRef={affiliationRef}
+                                        type='text' 
+                                        placeholder='소속' 
+                                        value={dataTosave.affiliation} 
+                                        onChange={(newValue) => handleInputChange("affiliation", newValue)}
+                                    /> 
+                                    */}
                                 </div>
                             </>
 
@@ -222,99 +245,63 @@ export default function IssueBadge() {
                                     onClick={() => document.getElementById('fileInput').click()}
                                     className='border flex items-center justify-center hover:bg-gray-100 cursor-pointer border-dashed rounded-xl border-gray-400'
                                 >
-                                    {!selectedImage && <div className='flex items-center flex-col'>
-                                        <div>
-                                            <ArrowUpTrayIcon className='text-gray-600 font-extrabold' />
+                                    {!selectedImage && <div className='items-center flex-col py-3'>
+                                        <ArrowUpTrayIcon className='text-gray-600 font-extrabold w-7 h-7 mx-auto' />
+                                        <div className='font-bold mt-1 text-center'>
+                                            <p className='text-gray-60 text-center0'>배지 이미지 업로드</p>
+                                            <p className='text-gray-400'>JPG, PNG, GIF</p>
                                         </div>
-                                        <p className='font-bold text-gray-600 mt-4'>Click to Upload badge image</p>
-                                        <p className='font-bold text-gray-400 mt-1'>JPG, PNG, GIF</p>
                                     </div>}
-
                                     <input
+                                        required
                                         type="file"
                                         id="fileInput"
                                         style={{ display: 'none' }}
                                         onChange={handleFileChange}
                                     />
-
                                     {selectedImage && (
                                         <Image width={100} height={100} src={selectedImage} alt="Uploaded" className='object-cover rounded-lg' />
                                     )}
 
                                 </div>
                                 <div className='flex flex-col'>
-                                    
                                     <p className='mt-5 mb-1 underline underline-offset-2 font-bold text-lg text-gray-600'>
-                                        Data Badge Claims
+                                        데이터 배지 정보
                                     </p>
                                     <Input 
+                                        required
                                         inputRef={badgeName} 
                                         type='text' 
-                                        placeholder='Badge Name' 
+                                        placeholder='배지 이름' 
                                         value={dataTosave.badgeName} 
                                         onChange={(newValue)=>handleInputChange("badgeName", newValue)}
                                     />
-                                    <Input 
-                                        inputRef={badgeType} 
-                                        type='text'  
-                                        placeholder='Badge Type'
-                                        value={dataTosave.badgetype}
-                                        onChange={(newValue)=>handleInputChange("badgetype", newValue)} 
+                                    <Select 
+                                        selectRef={category} 
+                                        defaultValue='배지 카테고리'
+                                        options={categoryOptions}
+                                        onChange={(newValue)=>handleInputChange("category", newValue)} 
                                     />
+                                    <Select 
+                                        selectRef={badgeType} 
+                                        defaultValue="배지 유형"
+                                        options={badgeTypeOptions}
+                                        onChange={(newValue)=>handleInputChange("badgetype", newValue)}
+                                    >
+                                    </Select>
                                     <Input 
                                         inputRef={subject} 
                                         type='text' 
-                                        placeholder='Subject'
+                                        placeholder='배지 정보 제목 ex) 대외활동'
                                         value={dataTosave.subject}
-                                        onChange={(newValue)=>handleInputChange("subject", newValue.split(',').map(item=>item.trim()))}
+                                        onChange={(newValue)=>handleInputChange("subject", newValue)}
                                     />
-                                    <Input 
-                                        inputRef={topic} 
-                                        type='text' 
-                                        placeholder='Topic'
-                                        value={dataTosave.topic}
-                                        onChange={(newValue)=>handleInputChange("topic", newValue)}
-                                    />
-                                    <Select 
-                                        selectRef={category} 
-                                        defaultValue="Select category"
-                                        options={["Standard", "NFT"]}
-                                        onChange={(newValue)=>handleInputChange("category", newValue)}
-                                    >
-                                    </Select>
-
                                     <textarea
                                         ref={description}
                                         className='appearance-none p-2 border rounded-xl mt-4 ring-0 focus-visible:bg-none focus:outline-none' 
-                                        placeholder='Badge Description'
+                                        placeholder='배지 설명 ex) 한국 아이디어 공모전 우수상 '
                                     >
                                     </textarea>
-                                    
-                                    <Input 
-                                        inputRef={skills} 
-                                        type='text'
-                                        placeholder='Skills' 
-                                        value={dataTosave.skills}
-                                        onChange={(newValue)=>handleInputChange("skills", newValue)}
-                                    />
-
-                                    <Select 
-                                        selectRef={grade} 
-                                        defaultValue="Select grade"
-                                        options={["A+", "A", "B+", "B"]}
-                                        onChange={(newValue)=>handleInputChange("grade", newValue)}
-                                        >
-                                    </Select>
-
-                                    <Select 
-                                        selectRef={level} 
-                                        defaultValue="Select level"
-                                        options={["Beginner", "Intermediate", "Advanced"]}
-                                        onChange={(newValue)=>handleInputChange("level", newValue)} 
-                                        >
-                                    </Select>
-
-                                    
                                 </div>
                             </div>
                         )}
@@ -323,11 +310,10 @@ export default function IssueBadge() {
                         <>
                             <div className='flex items-center justify-end mt-4'>
                                 <button
-                                    //disabled={}
                                     onClick={()=> setSection(section+1)}
                                     className='bg-black flex items-center justify-center space-x-2 px-4 py-3 text-white rounded-xl cursor-pointer'
                                 >
-                                    <p className='font-semibold'>Next</p>
+                                    <p className='font-semibold'>다음</p>
                                 </button>
                             </div>
                         </>
@@ -338,15 +324,22 @@ export default function IssueBadge() {
                                     onClick={() => setSection(section-1)}
                                     className='bg-gray-400 flex  items-center justify-center space-x-2 p-4 text-white rounded-xl cursor-pointer'
                                 >
-                                    <p className='font-semibold'>Prev</p>
+                                    <p className='font-semibold'>이전</p>
                                 </button>
                                 <button
-                                    disabled={isLoading ? true : false}
+                                    disabled={
+                                        isLoading || 
+                                        dataTosave.badgeName === "" ||
+                                        dataTosave.subject === "" ||
+                                        dataTosave.badgetype === "" ||
+                                        dataTosave.gender === "" ||
+                                        !selectedImage
+                                    }
                                     onClick={() => uploadNow()}
-                                    className='bg-black flex  items-center justify-center space-x-2 p-4 text-white rounded-xl cursor-pointer'
+                                    className='bg-blue-900 flex items-center justify-center space-x-2 p-4 text-white rounded-xl cursor-pointer disabled:opacity-50'
                                 >
-                                    {isLoading && <ArrowPathIcon className='stroke-white animate-spin' />}
-                                    <p className='font-semibold'>Generate</p>
+                                    {isLoading && <ArrowPathIcon className='w-4 h-4 stroke-white animate-spin' />}
+                                    <p className='font-semibold'>만들기</p>
                                 </button>
                             </div>
                         </>
@@ -369,24 +362,16 @@ export default function IssueBadge() {
                             <DialogDescription>{content?.description}</DialogDescription>
                         </DialogHeader>
                         <DialogFooter className="flex-row space-x-2 border-none">
-                            <Button type="button" variant="secondary" className="flex-1">
-                                <Link href="/home">
-                                    Home
-                                </Link>
-                            </Button>
-                            {content?.status ? (
-                                <Button type="button" className="flex-1">
-                                    <Link href={`/badge/certificate/${content?.badgeID}/detail`}>
-                                        Show detail
-                                    </Link>
-                                </Button>
-                            ) : (
-                                <Button type="button" className="flex-1" variant="destructive">
-                                    <Link href={`/badge/certificate/issue`}>
-                                        Rewrite
-                                    </Link>
-                                </Button>
-                            )}
+                        <Button type="button" variant="secondary" className="flex-1"  onClick={()=>{router.push('/home')}}>Home</Button>
+                                {content?.status ? (
+                                    <Button type="button" className="flex-1" onClick={()=>{router.push(`/badge/certificate/${content?.badgeID}/detail`)}}>Show detail</Button>
+                                ) : (
+                                    <DialogClose asChild>
+                                        <Button type="button" className="flex-1" variant="destructive" onClick={()=>{setSection(section-1)}}>
+                                            Rewrite
+                                        </Button>
+                                    </DialogClose>
+                                )}                            
                         </DialogFooter>
                     </DialogContent>
                 </Dialog>

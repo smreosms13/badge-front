@@ -1,8 +1,10 @@
 "use client"
-import BadgeContainer from "@/components/homepage/main/BadgeContainer";
-import BtnNav from "@/components/homepage/main/BtnNav";
-import VoucherList from "@/components/homepage/main/VoucherList";
-import Header from "@/components/homepage/main/Header";
+
+import { useAuth } from "@/context/Context";
+import { useRouter } from "next/navigation";
+import { useAccount } from "wagmi";
+import { useConnectModal} from '@rainbow-me/rainbowkit';
+import { useState, useEffect } from "react";
 
 import {
   Dialog,
@@ -13,83 +15,92 @@ import {
   DialogTitle,
   DialogClose
 } from "@/components/ui/dialog";
-
+import { Button } from "@/components/ui/button";
 import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
-  } from "@/components/ui/carousel-shadcn";
-import { Button } from "@/components/ui/button"
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
-
-import { useAuth } from "@/context/Context";
-import { useRouter } from "next/navigation";
-import { useAccount } from "wagmi";
-import { useConnectModal} from '@rainbow-me/rainbowkit';
-import { useState, useEffect } from "react";
+import BadgeContainer from "@/components/homepage/main/BadgeContainer";
+import BtnNav from "@/components/homepage/main/BtnNav";
+import VoucherList from "@/components/homepage/main/VoucherList";
+import Header from "@/components/homepage/main/Header";
+import { guideContents } from "@/components/homepage/guide/GuideContents";
 
 export default function Page() {
-
-  const BadgeContainerName = '디지털 증명서';
   const { currentUser } = useAuth();
   const router = useRouter();
   const account = useAccount();
   const { openConnectModal } = useConnectModal();
-  const [modalOpened, setModalOpened] = useState(false);
-  const [guideOpened, setGuideOpened] = useState(false);
+  const [isConnectOpened, setIsConnectOpened] = useState(false);
+  const [guideOpen, setGuideOpen] = useState(false);
+  const isNewUser = currentUser?.metadata.createdAt === currentUser?.metadata.lastLoginAt;
 
-  useEffect(()=> {
-    const isNewUser = currentUser?.metadata.createdAt === currentUser?.metadata.lastLoginAt;
-    if (isNewUser) {
-      setGuideOpened(true);
-    } 
-    if (currentUser && openConnectModal && account?.isDisconnected && !modalOpened) { 
-      openConnectModal();
-      setModalOpened(true)
+  const [isGuideOpened, setIsGuideOpened] = useState(() => {
+    // 페이지가 처음 로드될 때 로컬 스토리지에서 isGuideOpened 값을 가져옴
+    const storedValue = localStorage.getItem('isGuideOpened');
+    return storedValue ? JSON.parse(storedValue) : false;
+  });
+
+  useEffect(() => {
+    // isNewUser, isGuideOpened의 값이 변화할 때 
+    // 신규 유저이면서 유저 가이드를 보지 않았다면 가이드 모달 열기
+    if(isNewUser && !isGuideOpened){
+      setGuideOpen(true);
+      console.log("1 isGuideOpened", isGuideOpened)
     }
-  },[guideOpened, currentUser, account, openConnectModal, modalOpened])
+    // 페이지가 언마운트될 때 로컬 스토리지에 isGuideOpened 값을 저장
+    return () => {
+      localStorage.setItem('isGuideOpened', JSON.stringify(isGuideOpened));
+    };
+  }, [isNewUser, isGuideOpened]);
+  
+  useEffect(() => {
+    console.log("2 isGuideOpened", isGuideOpened)
+    // isGuideOpened가 true이고, isConnectOpened가 false이며, 계정이 연결되지 않은 경우에만 실행
+    if(isGuideOpened && !isConnectOpened && account?.isDisconnected) {
+        openConnectModal();
+        setIsConnectOpened(true);
+    }
+}, [isGuideOpened, isConnectOpened, account, openConnectModal]);
+
 
   if(currentUser){
     return (
       <main className="mx-auto max-w-sm h-dvh grid gap-3 shadow-2xl p-6 bg-white">
-        <Header />
-        <BadgeContainer name={BadgeContainerName} />
-        <BtnNav/>
-        <VoucherList />
-
-        {guideOpened && (
-          <Dialog open={guideOpened} onOpenChange={setGuideOpened}>
+        {isNewUser && (
+          <Dialog open={guideOpen} onOpenChange={setGuideOpen}>
             <DialogContent className="max-w-sm">
                 <DialogHeader className="items-center">
-                    <div className='mb-3'></div>
-                    <DialogTitle>USER GUIDE</DialogTitle>
-                    <DialogDescription>USER GUIDE</DialogDescription>
+                    <DialogTitle>고려대학교 디지털배지</DialogTitle>
+                    <DialogDescription className="font-semibold">나만의 Digital Badge를 만들고 공유해보자!</DialogDescription>
                 </DialogHeader>
-                <Carousel className="w-full max-w-xs">
+                  <Carousel className="w-full max-w-xs">
                     <CarouselContent>
-                        {Array.from({ length: 5 }).map((_, index) => (
-                        <CarouselItem key={index}>
-                            <div className="p-1">
-                                <div className="flex aspect-square items-center justify-center p-6">
-                                <span className="text-4xl font-semibold">{index + 1}</span>
-                                </div>
-                            </div>
-                        </CarouselItem>
+                        {guideContents.map((content, index) => (
+                            <CarouselItem key={index+1}>
+                              {content}  
+                            </CarouselItem>
                         ))}
                     </CarouselContent>
                     <CarouselPrevious />
                     <CarouselNext />
-                </Carousel>
+                  </Carousel>
                 <DialogFooter className="flex-row space-x-2 border-none">
                   <DialogClose asChild>
-                    <Button type="button" className="flex-1">시작하기</Button>
+                    <Button type="button" className="flex-1" onClick={()=> {setIsGuideOpened(true)}}>시작하기</Button>
                   </DialogClose>
                 </DialogFooter>
             </DialogContent>
           </Dialog>
         )}
+        <Header />
+        <BadgeContainer/>
+        <BtnNav/>
+        <VoucherList />
       </main>
     );
   } else {

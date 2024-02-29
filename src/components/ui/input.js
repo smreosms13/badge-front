@@ -15,9 +15,14 @@ const Select = ({ defaultValue, options, onChange, selectRef, className, ...prop
             {...props}
         >
             <option key="default" value={defaultValue} disabled>{defaultValue}</option>
-            {options.map((option) => (
-                <option key={option} value={option}>
-                    {option}
+            {options.map((option, index) => (
+                <option 
+                    key={index}
+                    value={option.value}
+                    disabled={option.disabled ? (option.disabled) : (false)} 
+                    className={`${option.disabled ? 'bg-gray-200':''}`}
+                >
+                    {option.value}
                 </option>
             ))}
         </select>

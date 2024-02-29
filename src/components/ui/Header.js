@@ -3,6 +3,9 @@ import { ChevronLeftIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 
 function getName(pathname){
+    if (pathname.startsWith("/badge/certificate/") && pathname.endsWith("/detail")) {
+        return "나의 배지 정보";
+    }
     switch (pathname) {
         case "/badge/certificate/issue":
             return "배지 만들기";
@@ -24,7 +27,6 @@ function getName(pathname){
 
 export default function Header(){
     const pathname = usePathname()
-    console.log(pathname)
     const name = getName(pathname);
 
 
