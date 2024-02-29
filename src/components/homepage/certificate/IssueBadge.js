@@ -375,10 +375,11 @@ export default function IssueBadge() {
                                         dataTosave.badgeName === "" ||
                                         dataTosave.subject === "" ||
                                         dataTosave.badgetype === "" ||
+                                        dataTosave.gender === "" ||
                                         !selectedImage
                                     }
                                     onClick={() => uploadNow()}
-                                    className='bg-black flex  items-center justify-center space-x-2 p-4 text-white rounded-xl cursor-pointer'
+                                    className='bg-blue-900 flex items-center justify-center space-x-2 p-4 text-white rounded-xl cursor-pointer disabled:opacity-50'
                                 >
                                     {isLoading && <ArrowPathIcon className='w-4 h-4 stroke-white animate-spin' />}
                                     <p className='font-semibold'>만들기</p>
