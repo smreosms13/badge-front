@@ -1,10 +1,11 @@
 "use client"
-import CarouselContainer from '@/components/ui/CarouselContainer';
-import Badge from '@/components/ui/Badge';
+
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/Context';
 import axios from 'axios';
 import { ArrowPathIcon } from '@heroicons/react/24/solid';
+import Badge from '@/components/ui/Badge';
+import { CarouselContainer } from '@/components/ui/scrollable-carousel';
 
 export default function BadgeContainer() {
     const [isLoading, setIsLoading] = useState(true);
