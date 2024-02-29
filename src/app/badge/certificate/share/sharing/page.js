@@ -2,8 +2,10 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useAuth } from '@/context/Context';
+/* category 생성 및 공유할 링크 생성 page */
 
 export default function Goshare() {
+    // categoryID != categoryName name은 유저가 설정 및 보이는 이름, id는 api 전송용 
     const { currentUser } = useAuth();
     const [categoryName, setCategoryName] = useState('');
     const [categoryId, setCategoryId] = useState('');
@@ -12,11 +14,16 @@ export default function Goshare() {
         const savedItems = localStorage.getItem('selectedImages');
         return savedItems ? JSON.parse(savedItems) : [];
     });
-
+    /* 전 페이지에서 선택한 badge들만 show */
     const handleButtonClick = async () => {
         const BadgeIDs = selectedImages.map((image, index) => ({
             [`badge${index + 1}`]: image.id
         }));
+        /* 선택한 badge들 1개의 category에 담기 
+        api : createAndPublishCategory
+        datatosend : currentuserid, categoryname, badgeIds
+        categoryname : 사용자가 지정해서 생성
+        */
 
         const url = 'https://us-central1-openbadges-537a3.cloudfunctions.net/api/createAndPublishCategory';
         const dataToSend = {
@@ -46,6 +53,7 @@ export default function Goshare() {
             console.error('Error:', error);
         }
     };
+    /* link 공유 onclik function */
 
     const handleShareClick = () => {
         const url = `/showpage/${currentUser?.uid}/${categoryId}`;
@@ -55,7 +63,9 @@ export default function Goshare() {
 
     return (
         <>
-        {/* make collection button*/}
+        {/* make collection button
+            collection name needed
+            */}
             <div className="flex mb-4 h-11">
                 <div className="flex items-center justify-center flex-1 bg-blue-600 rounded-2xl mr-3 px-5">
                     <input
@@ -87,6 +97,7 @@ export default function Goshare() {
                         <div className="flex-1 h-20 justify-center">
                             <div className="font-semibold text-md text-gray-800">
                                 <p>{image.badgeName}</p>
+                                {/* image information 있는지 확인 */}
                                 {image.issuer && image.issuer.emailAddress ? <p>{image.issuer.emailAddress}</p> : <p>No Address</p>}
                                 {image.issuer && image.issuer.affiliation ? <p>{image.issuer.affiliation}</p> : <p>No affiliation</p>}
                             </div>

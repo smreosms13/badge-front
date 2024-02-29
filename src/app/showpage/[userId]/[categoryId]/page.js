@@ -13,8 +13,8 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
-{/* 공유된 page 자랑용 page
-로그인 없이 접속가능해야함 */}
+/* 공유된 page 자랑용 page
+로그인 없이 접속가능해야함 */
 
 export default function Page() {
   const [badges, setBadges] = useState([]);
@@ -28,8 +28,8 @@ export default function Page() {
   useEffect(() => {
     fetchData();
   }, []);
-  {/* api : getSingleCategoryByUserID
-      datatosend : userid, categoryid */}
+  /* api : getSingleCategoryByUserID
+      datatosend : userid, categoryid */
   const fetchData = async () => {
     try {
         const response = await axios.post(apiUrl);
@@ -49,6 +49,7 @@ export default function Page() {
       <div className="my-3">
         <div className="flex items-center flex-col w-full bg-cover">
               <div className="dark:!border-navy-700 flex h-[110px] w-[110px] items-center justify-center rounded-full border-[4px] border-white bg-pink-400">
+                {/* userinfrormation validation check */}
                 { Object.keys(userInfo).length !== 0 && <Image
                   className="rounded-full"
                   src={userInfo?.imageUrl}
@@ -68,6 +69,7 @@ export default function Page() {
       <div className="flex-col">
         {/* userbadge show */}
         <div className="flex flex-wrap">
+          {/* badge validation check */}
           {
             badges?.length !== 0 ? (
               badges.map((badge, index) => (
@@ -95,6 +97,7 @@ export default function Page() {
                           </div>
                           <div className="flex-1 justify-center">
                               <div className="text-md font-semibold">
+                                {/* badge information validation check */}
                                   <span className="text-sm text-muted-foreground">배지 발급자</span>
                                   {badge.issuer && badge.issuer.emailAddress ? <p>{badge.issuer.emailAddress}</p> : <p>No Address</p>}
                                   <span className="text-sm text-muted-foreground">배지 발급기관</span>

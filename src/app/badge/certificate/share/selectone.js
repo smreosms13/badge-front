@@ -5,7 +5,7 @@ import { useAuth } from '@/context/Context';
 import Image from "next/image";
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
-    {/* 공유할 이미지 선택하는 page */}
+    {/* 공유할 이미지 선택하는 component*/}
 
 function Imageselector() {
     const [images, setImages] = useState([]);
