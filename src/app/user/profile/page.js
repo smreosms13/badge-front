@@ -1,5 +1,5 @@
 import Table from "@/components/homepage/profile/Table";
-import CardList from "@/components/ui/CardList";
+import { CardList } from "@/components/ui/Card";
 import Link from "next/link";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 

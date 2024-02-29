@@ -1,7 +1,7 @@
 import Link from "next/link";
 import clsx from 'clsx';
 
-export default function Card({content}) {
+function Card({content}) {
     const CardIcon = content.icon
     return(
         <Link 
@@ -21,4 +21,27 @@ export default function Card({content}) {
             }>{content.achievement}&nbsp;&#37;</p></div>        
         </Link> 
     );
+}
+
+function CardList({name, contents, CustomCard}) {
+    const CardComponent = CustomCard ? CustomCard : Card;
+    return(
+        <div className="flex flex-col">
+            {name && (
+                <div className="my-1 font-medium text-lg">
+                    <p>{name}</p>
+                </div>
+            )}
+            <div className="h-56 overflow-y-scroll p-2 scrollbar-hide">
+                {contents.map((content) => (
+                    <CardComponent key={content.subject} content={content}></CardComponent>
+                ))}
+            </div>
+        </div>   
+    )
+};
+
+export {
+    Card,
+    CardList
 }
