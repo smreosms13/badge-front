@@ -1,8 +1,7 @@
 "use client"
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation'
-import Banner from '@/components/homepage/certificate/Banner';
-import Table from '@/components/homepage/certificate/Table';
+import BadgeDetail from '@/components/homepage/certificate/BadgeDetail';
 import axios from 'axios';
 import { useAuth } from '@/context/Context';
 
@@ -38,14 +37,11 @@ export default function Page() {
         }
     };
 
-
-    
     return (
         <>
             {content ? 
             (<>
-                <Banner content={content}></Banner>
-                <Table content={content}></Table>
+                <BadgeDetail content={content}></BadgeDetail>
             </>
             ) : (
                 <p>Loading...</p>
