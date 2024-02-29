@@ -1,4 +1,4 @@
-import { UserCircleIcon, EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/outline"
+import {BookmarkSquareIcon, BuildingLibraryIcon, CalendarIcon, ShieldExclamationIcon } from "@heroicons/react/24/solid";
 
 function formatDate(input) {
     let date;
@@ -32,34 +32,37 @@ export default function Table({content}){
 
     return(
         <>
-        <div className="flex mb-3 flex-col ">
-            <div className="">
-                <p className="text-sm font-semibold">Issuer Email address</p>
-                <div className="flex my-1">
-                    <EnvelopeIcon className="w-5 h-5 stroke-gray-400"></EnvelopeIcon>
-                    <p className="ms-5 text-sm">{content.issuer.emailAddress}</p>
+        <div className="flex-col mx-auto">
+            <div className="bg-slate-100 rounded-md p-2">
+                <div className="flex">
+                        <BookmarkSquareIcon className="w-5 h-5"></BookmarkSquareIcon>
+                        <p className="ms-1 text-md font-semibold">배지 정보</p>                    
                 </div>
+                <p className="ms-1 text-md">{content.dataBadgeClaim.subject}</p>
+                <p className="ms-3 text-sm">{content.dataBadgeClaim.description}</p>
+                
             </div>
-            <div className="my-2">
-                <p className="text-sm font-semibold ">Issuer Affiliation</p>
-                <div className="flex my-1">
-                    <EnvelopeIcon className="w-5 h-5 stroke-gray-400"></EnvelopeIcon>
-                    <p className="ms-5 text-sm">{content.issuer.affiliation}</p>
+            <div className="my-2 bg-slate-100 rounded-md p-2">
+                <div className="flex">
+                    <BuildingLibraryIcon className="w-5 h-5 "></BuildingLibraryIcon>
+                    <p className="text-md font-semibold ms-1">발급 기관</p>                    
                 </div>
+                <p className="ms-1 text-md">{content.issuer.affiliation}</p>
             </div>
-            <div className="">
-                <p className="text-sm font-semibold ">Issuerance Date</p>
-                <div className="flex my-1">
-                    <UserCircleIcon className="w-5 h-5 stroke-gray-400"></UserCircleIcon>
-                    <p className="ms-5 text-sm">{issuanceDate}</p>
-                </div>
+            <div className="my-2 bg-slate-100 rounded-md p-2">  
+                <div className="flex">
+                    <CalendarIcon className="w-5 h-5 "></CalendarIcon>
+                    <p className="ms-1 text-md font-semibold ">발급 일시</p>
+               </div>
+               <p className="ms-1 text-md">{issuanceDate}</p>
             </div>
-            <div className="">
-                <p className="text-sm font-semibold ">Expiration Date</p>
-                <div className="flex my-1">
-                    <PhoneIcon className="w-5 h-5 stroke-gray-400"></PhoneIcon>
-                    <p className="ms-5 text-sm">{expirationDate}</p>
+            <div className="my-2 bg-slate-100 rounded-md p-2">
+                
+                <div className="flex">
+                    <ShieldExclamationIcon className="w-5 h-5 "></ShieldExclamationIcon>
+                    <p className="ms-1 text-md font-semibold ">유효 기간</p>
                 </div>
+                <p className="ms-1 text-md">{expirationDate}</p>
             </div>
         </div>
     </>

@@ -1,31 +1,36 @@
 import Image from "next/image"
+
+// 배지 상세 정보 표시
 export default function Banner({content}){
 
     const hasTokenId = content.tokenId;
   
     return(
-      <div className="flex items-center flex-col w-full bg-cover mb-5">
+      <div className="flex items-center flex-col w-full mb-5">
+        {/* badge Image*/}
         <div
-          className="mt-1 flex h-32 w-full justify-center rounded-xl bg-cover"
+          className="flex h-32 w-full justify-center"
         >
-          <div className="dark:!border-navy-700 absolute flex h-36 w-36 items-center justify-center rounded-full border-[5px] border-pink-200">
+          <div className="absolute flex h-32 w-32 items-center justify-center">
             <Image
-              className="rounded-full"
+              className="rounded-3xl border-[5px] border-slate-400"
               layout="fill"
               src={content.image}
               alt={content.badgeName}
             />
           </div>
         </div>
-      {/* Name and position */}
-      <div className="mt-5 flex flex-col items-center">
-        <h4 className="text-navy-700 text-xl font-bold dark:text-white">
+      {/* badgeName, category, badgeType*/}
+      <div className="mt-3 flex flex-col items-center">
+        <h4 className="text-2xl font-bold">
           {content.badgeName}
         </h4>
-        <h5 className="text-base font-normal text-blue-600">{content.description}</h5>
+        <h5 className="text-base font-semibold text-blue-600">{content.dataBadgeClaim.category} 배지 </h5>
+        <p className="text-sm text-gray-400">{content.dataBadgeClaim.type} 배지 </p>
       </div>
+      {/* connect to etherscan using txHash */}
       {hasTokenId !== "" && (
-        <div className="ml-auto mt-5">
+        <div className="ml-auto">
           <a 
             href={`https://sepolia.etherscan.io/tx/${content.txHash}`} 
             className="bg-blue-600 rounded-xl p-1 px-2 text-white font-bold"
