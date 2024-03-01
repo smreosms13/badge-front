@@ -9,13 +9,13 @@ export default function Goshare() {
     const { currentUser } = useAuth();
     const [categoryName, setCategoryName] = useState('');
     const [categoryId, setCategoryId] = useState('');
-
+    // localstorage 에서 selectedImages 불러오기 
     const [selectedImages, setSelectedImages] = useState(() => {
         const savedItems = localStorage.getItem('selectedImages');
         return savedItems ? JSON.parse(savedItems) : [];
     });
-    /* 전 페이지에서 선택한 badge들만 show */
-    const handleButtonClick = async () => {
+        /* 전 페이지에서 선택한 badge들만 show */
+         const handleButtonClick = async () => {
         const BadgeIDs = selectedImages.map((image, index) => ({
             [`badge${index + 1}`]: image.id
         }));
@@ -24,7 +24,6 @@ export default function Goshare() {
         datatosend : currentuserid, categoryname, badgeIds
         categoryname : 사용자가 지정해서 생성
         */
-
         const url = 'https://us-central1-openbadges-537a3.cloudfunctions.net/api/createAndPublishCategory';
         const dataToSend = {
             userId: currentUser?.uid,
@@ -54,7 +53,6 @@ export default function Goshare() {
         }
     };
     /* link 공유 onclik function */
-
     const handleShareClick = () => {
         const url = `/showpage/${currentUser?.uid}/${categoryId}`;
         navigator.clipboard.writeText(window.location.origin + url);
