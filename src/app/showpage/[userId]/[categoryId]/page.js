@@ -20,6 +20,7 @@ export default function Page() {
   const [badges, setBadges] = useState([]);
   const [userInfo, setUserInfo] = useState({});
   const [category, setCategoryInfo] = useState([]);
+  // params 불러와서 uri에 대입
   const params = useParams();
   const userId = decodeURIComponent(params.userId);
   const categoryId = decodeURIComponent(params.categoryId);
