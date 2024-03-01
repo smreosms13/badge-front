@@ -5,18 +5,20 @@ import { useAuth } from '@/context/Context';
 import Image from "next/image";
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
-    {/* 공유할 이미지 선택하는 component*/}
+    /* 공유할 이미지 선택하는 component*/
 
 function Imageselector() {
+    /*
+    ischecked : 선택했는지 확인 
+    selectedImages : 선택된 badges*/
     const [images, setImages] = useState([]);
     const [isChecked, setIsChecked] = useState(false);
     const { currentUser } = useAuth();
     const [selectedImages, setSelectedImages] = useState([]);
 
-    {/* api: getALLMyVDBs 
+    /* api: getALLMyVDBs 
         모든 배지 가져오기
-        datatosend : currentuserid
-    */}
+        datatosend : currentuserid*/
     const fetchData = async () => {
         try {
             const dataToSend = {
@@ -33,15 +35,13 @@ function Imageselector() {
     useEffect(() => {
         fetchData();
     }, []);
-    {/* local data 중복 방지 */}
-
+    /* local data 중복 방지 */
     const compareId = (image1, image2) => {
         return image1.id === image2.id;
     };
 
-    {/* onclick function
-        image selection
-    */}
+     /* onclick function
+        image selection */
     const toggleImage = (image) => {
         setSelectedImages((prevSelectedImages) =>
             prevSelectedImages.some((i) => compareId(i, image))
@@ -50,16 +50,16 @@ function Imageselector() {
         );
         setIsChecked(!isChecked);
     };
-    
+    // image 이미 선택되어있는지 확인
     const isValidImage = (image) => {
       return image && image.image !== '' ;
     };
-
+    // localstorage에 badge 저장
     useEffect(() => {
         localStorage.setItem('selectedImages', JSON.stringify(selectedImages));
     }, [selectedImages]);
 
-    {/* Verified, Valid badge만 공유 가능하도록 filtering */}
+    /* Verified, Valid badge만 공유 가능하도록 filtering */
     const classificationImage = images.filter((image) => (image.isValid === "true") && (image.isVerified === "true"));
 
     return (
@@ -84,6 +84,7 @@ function Imageselector() {
                                 onClick={() => toggleImage(image)}
                                 style={{ border: selectedImages.includes(image) ? '2px solid blue' : 'none' }}
                             ></Image>
+                            {/* 이미지 선택하면 check표시 드러내는 함수 */}
                             {selectedImages.includes(image) && (
                                 <CheckCircleIcon className="absolute -right-3 -top-1 w-6 h-6 fill-blue-700"></CheckCircleIcon>
                             )}
