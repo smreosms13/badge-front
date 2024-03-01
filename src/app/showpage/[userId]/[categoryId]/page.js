@@ -83,7 +83,7 @@ export default function Page() {
                       <div>
                         <DrawerHeader className="flex">
                           <DrawerTitle>{badge.badgeName}</DrawerTitle>
-                          <div className="bg-blue-300 w-fit p-1 font-sm text-white rounded-lg leading-none tracking-tight">
+                          <div className="bg-red-300 w-fit p-1 font-sm text-white rounded-lg leading-none tracking-tight">
                             {category.categoryName}
                           </div>
                         </DrawerHeader>
@@ -97,12 +97,19 @@ export default function Page() {
                             />
                           </div>
                           <div className="flex-1 justify-center">
+<<<<<<< HEAD
                               <div className="text-md font-semibold">
                                 {/* badge information validation check */}
                                   <span className="text-sm text-muted-foreground">배지 발급자</span>
                                   {badge.issuer && badge.issuer.emailAddress ? <p>{badge.issuer.emailAddress}</p> : <p>No Address</p>}
                                   <span className="text-sm text-muted-foreground">배지 발급기관</span>
                                   {badge.issuer && badge.issuer.affiliation ? <p>{badge.issuer.affiliation}</p> : <p>No affiliation</p>}
+=======
+                              <div className="font-semibold">
+                                  <p className="text-sm">{badge?.dataBadgeClaim?.type}</p>
+                                  <p className="text-md text-muted-foreground">{badge?.dataBadgeClaim?.subject}</p>
+                                  <p className="text-sm text-muted-foreground">{badge?.dataBadgeClaim?.description}</p>
+>>>>>>> ffeabfb22c4f6a9c6c98e9322a86af62e1b80bb4
                               </div>
                             </div>
                           </div>

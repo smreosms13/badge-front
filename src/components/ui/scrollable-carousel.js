@@ -31,7 +31,7 @@ const CarouselIndicator = ({ totalCarousels, currentCarousel }) => (
     );
 
 
-export default function Carousel({contents, CarouselComponent}){
+function Carousel({contents, CarouselComponent}){
     const [currentCarousel, setCurrentCarousel] = useState(0);
     const containerRef = useRef();
 
@@ -71,4 +71,28 @@ export default function Carousel({contents, CarouselComponent}){
             <CarouselIndicator totalCarousels={contents.length} currentCarousel={currentCarousel}></CarouselIndicator>        
         </>
     )
+}
+
+function CarouselContainer({contents, CarouselComponent}) {
+
+    const maxContentPerPage = 6;
+    const [contentGroups, setContentGroups] = useState([]);
+
+    useEffect(() => {
+        const newContentGroups = [];
+        for (let i = 0; i < contents.length; i += maxContentPerPage) {
+            newContentGroups.push(contents.slice(i, i + maxContentPerPage));
+        }
+        setContentGroups(newContentGroups);
+    }, [ contents]);
+    
+    return(
+        <Carousel contents={contentGroups} CarouselComponent={CarouselComponent}></Carousel>
+    )
+
+};
+
+export { 
+    Carousel,
+    CarouselContainer
 }
