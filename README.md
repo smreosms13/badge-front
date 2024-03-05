@@ -30,9 +30,9 @@ NEXT_PUBLIC_API_URL = (SERVER BASE URL)
 ## Usage & Requirements
 Installation of wallet(ex: Metamask) apps or extension programs is required.
 
-## Company Information
+## Contact
 
-Data Badge service is provided by **`IBEL`**. For more information about our company and services, please visit our website [IBEL](https://ibel.korea.ac.kr/).
+Data Badge service is provided by **`IBEL`** and **`Dao Solution`**. For more information about our company and services, please visit our website [IBEL](https://ibel.korea.ac.kr/).
 
 
 ## License
