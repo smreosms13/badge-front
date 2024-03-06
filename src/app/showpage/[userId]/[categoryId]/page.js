@@ -120,7 +120,7 @@ export default function Page() {
                 </div>
               ))
             ) : (
-              <p>No data...</p>
+              <p>Loading...</p>
             )
           }
         </div>
