@@ -1,3 +1,5 @@
+// Application Binary Interface (ABI)
+// Smart Contract의 함수와 파라미터에 대한 MetaData를 정의해 Contract의 객체를 만들고 함수를 호출할 수 있는 표준방법
 export const Abi =
     [
         {

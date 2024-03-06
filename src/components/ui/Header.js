@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ChevronLeftIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 
+// pathname에 따라 페이지 이름 변경
 function getName(pathname){
     if (pathname.startsWith("/badge/certificate/") && pathname.endsWith("/detail")) {
         return "나의 배지 정보";
@@ -25,24 +26,27 @@ function getName(pathname){
     }
 }
 
+// 메인 페이지를 제외한 Header
 export default function Header(){
     const pathname = usePathname()
     const name = getName(pathname);
 
-
     return(
         <div className="flex mb-3 w-full">
+            {/* 이전 페이지 이동, 현재는 무조건 메인페이지로 이동하는 데 향후 수정 요망 */}
             <Link
                 href='/home'
                 className='flex-initial flex justify-center items-center font-black w-10 h-10 rounded-full bg-slate-100 mb-1'
             >                                
                 <ChevronLeftIcon className="w-6 h-6"></ChevronLeftIcon>
             </Link>
+            {/* 페이지 제목 */}
             {name && (
                 <div className="flex-1 font-medium text-lg text-center">
                     <p className="text-black">{name}</p>
                 </div>
             )}
+            {/* 메뉴 버튼 - 향후 개발 요망 */}
             <button
                 className='flex-initial flex justify-center items-center font-black w-10 h-10 rounded-full bg-slate-100 mb-1'
             >                                

@@ -1,13 +1,14 @@
 'use client'
-
 import { useAuth } from '@/context/Context';
 import { useRouter } from 'next/navigation';
 
+// 구글 로그인 페이지
 export default function Authentication() {
 
     const { SignInWithGoogle, currentUser } = useAuth()
     const router = useRouter()
 
+    // 구글 로그인
     async function loginWithGoogle() {
         try {
             await SignInWithGoogle()
@@ -16,10 +17,11 @@ export default function Authentication() {
             console.log(error)
         }
     }
-
+    // 로그인 o -> home 페이지로 이동
     if (currentUser) {
         router.push('/home')
     } else {
+        // 로그인 x -> 로그인 페이지 렌더링
         return (
             <div className="flex flex-col px-8 pt-10">
                 <div className="pt-20 pb-6">

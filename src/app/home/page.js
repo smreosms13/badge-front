@@ -28,15 +28,19 @@ import BadgeContainer from "@/components/homepage/main/BadgeContainer";
 import BtnNav from "@/components/homepage/main/BtnNav";
 import VoucherList from "@/components/homepage/main/VoucherList";
 import Header from "@/components/homepage/main/Header";
+
+// user guide contents
 import { guideContents } from "@/components/homepage/guide/GuideContents";
 
 export default function Page() {
-  const { currentUser } = useAuth();
-  const router = useRouter();
-  const account = useAccount();
-  const { openConnectModal } = useConnectModal();
-  const [isConnectOpened, setIsConnectOpened] = useState(false);
-  const [guideOpen, setGuideOpen] = useState(false);
+  const { currentUser } = useAuth();  // 현재 로그인한 user
+  const router = useRouter();         
+  const account = useAccount();       // 연결된 wallet account
+  const { openConnectModal } = useConnectModal();  // rainbowKit connetModal
+  const [isConnectOpened, setIsConnectOpened] = useState(false);  //connetModal이 이전에 opne되었는지 저장
+  const [guideOpen, setGuideOpen] = useState(false);              //user guide open control
+
+  // 현재 로그인한 user가 새 user인지 확인
   const isNewUser = currentUser?.metadata.createdAt === currentUser?.metadata.lastLoginAt;
 
   const [isGuideOpened, setIsGuideOpened] = useState(() => {
@@ -60,7 +64,8 @@ export default function Page() {
   
   useEffect(() => {
     console.log("2 isGuideOpened", isGuideOpened)
-    // isGuideOpened가 true이고, isConnectOpened가 false이며, 계정이 연결되지 않은 경우에만 실행
+    // isGuideOpened가 true이고, isConnectOpened가 false이며, 
+    // 계정이 연결되지 않은 경우에만 wallet connect modal 실행
     if(isGuideOpened && !isConnectOpened && account?.isDisconnected) {
         openConnectModal();
         setIsConnectOpened(true);
@@ -71,8 +76,10 @@ export default function Page() {
   if(currentUser){
     return (
       <main className="mx-auto max-w-sm h-dvh grid gap-3 shadow-2xl p-6 bg-white">
+        {/* new user : user guide rendering */}
         {isNewUser && (
           <Dialog open={guideOpen} onOpenChange={setGuideOpen}>
+            {/* user guide */}
             <DialogContent className="max-w-sm">
                 <DialogHeader className="items-center">
                     <DialogTitle>고려대학교 디지털배지</DialogTitle>
@@ -98,8 +105,11 @@ export default function Page() {
           </Dialog>
         )}
         <Header />
-        <BadgeContainer/>
+        {/* 데이터 배지 보관함 */}
+        <BadgeContainer/> 
+        {/* 배지 만들기, 공유하기, 관리하기 버튼 */}
         <BtnNav/>
+        {/* 디지털 바우처 리스트 */}
         <VoucherList />
       </main>
     );

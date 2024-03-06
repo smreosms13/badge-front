@@ -6,13 +6,17 @@ import Image from "next/image";
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 
-
-function Imageselector() {
+// 공유할 배지를 선택하는 컴포넌트
+function BadgeSelector() {
     const [images, setImages] = useState([]);
+    // isChecked : 선택했는지 확인하는 state
     const [isChecked, setIsChecked] = useState(false);
     const { currentUser } = useAuth();
+    // selectedImages : 선택된 배지를 저장하는 state
     const [selectedImages, setSelectedImages] = useState([]);
 
+    // api : getAllMyVDBs - user의 모든 배지 정보 조회 
+    // dataTosend: userId
     const fetchData = async () => {
         try {
             const dataToSend = {
@@ -30,10 +34,12 @@ function Imageselector() {
         fetchData();
     }, []);
 
+    // local data 중복 방지
     const compareId = (image1, image2) => {
         return image1.id === image2.id;
     };
 
+    // onclick function : image selection 
     const toggleImage = (image) => {
         setSelectedImages((prevSelectedImages) =>
             prevSelectedImages.some((i) => compareId(i, image))
@@ -42,10 +48,13 @@ function Imageselector() {
         );
         setIsChecked(!isChecked);
     };
+    
+    // check image src not empty string
     const isValidImage = (image) => {
       return image && image.image !== '' ;
     };
 
+    // localstorage에 선택한 badge 저장
     useEffect(() => {
         localStorage.setItem('selectedImages', JSON.stringify(selectedImages));
     }, [selectedImages]);
@@ -64,6 +73,7 @@ function Imageselector() {
                     - Verified, Valid badge만 공유 가능하도록 변경 시 아래 코드 활용
                         images.filter() => classificationImage.filter() 
                 */}
+                {/* 내가 보유한 배지 중 valid image src한 배지만 표시 */}
                 {images.filter(isValidImage).map((image, index) => (
                     <div key={index} className={`flex justify-center items-center relative w-20 h-20 rounded-xl `}>
                         <div>
@@ -75,6 +85,7 @@ function Imageselector() {
                                 onClick={() => toggleImage(image)}
                                 style={{ border: selectedImages.includes(image) ? '2px solid blue' : 'none' }}
                             ></Image>
+                            {/* 이미지 선택 시 check icon 표시 */}
                             {selectedImages.includes(image) && (
                                 <CheckCircleIcon className="absolute -right-3 -top-1 w-6 h-6 fill-blue-700"></CheckCircleIcon>
                             )}
@@ -82,7 +93,7 @@ function Imageselector() {
                     </div>
                 ))}
             </div>
-
+            {/* link share/sharing button */}
             <Link href="/badge/certificate/share/sharing">
                 <div className='flex items-center justify-center bg-blue-900 rounded-3xl text-white h-12'>
                     배지 컬렉션 공유하기
@@ -92,4 +103,4 @@ function Imageselector() {
     );
 }
 
-export default Imageselector;
+export default BadgeSelector;

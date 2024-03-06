@@ -7,8 +7,9 @@ import {
     PuzzlePieceIcon,
     RadioIcon,
 } from '@heroicons/react/24/solid';
-import {CardList} from '@/components/ui/Card';
+import { CardList } from '@/components/ui/Card';
 
+// voucher mock data
 const vouchers = [
     {subject: '현대자동차 인턴 우선채용', href: '/badge/voucher', icon:BeakerIcon, type: 'Skill Achievement Badge',achievement : 100},
     {subject:'신한은행 대출 100만원', href: '/badge/voucher', icon:LanguageIcon, type:'Financial Service Badge', achievement: 80},
@@ -17,6 +18,7 @@ const vouchers = [
     {subject: '토스뱅크 개발자 우선채용', href:'/badge/voucher', icon:RadioIcon,  type:'Skill Achievement Badge', achievement:70},
 ];
 
+// voucher list component
 export default function VoucherList(){
     const name = '디지털 바우처';
     return(
