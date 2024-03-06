@@ -100,8 +100,8 @@ export default function Goshare() {
                         <div className="flex-1 h-20 justify-center">
                             <div className="font-semibold text-md text-gray-800">
                                 <p>{image.badgeName}</p>
-                                <p className="text-md text-muted-foreground">{badge?.dataBadgeClaim?.subject}</p>
-                                <p className="text-sm text-muted-foreground">{badge?.dataBadgeClaim?.description}</p>
+                                <p className="text-md text-muted-foreground">{image?.dataBadgeClaim?.subject}</p>
+                                <p className="text-sm text-muted-foreground">{image?.dataBadgeClaim?.description}</p>
                             </div>
                         </div>
                     </div>
