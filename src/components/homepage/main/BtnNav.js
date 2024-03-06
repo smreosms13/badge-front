@@ -7,6 +7,7 @@ import {
     ArchiveBoxIcon,
 } from '@heroicons/react/24/outline';
 
+// Link data 
 const links = [
     {name:'배지 만들기', href: '/badge/certificate/issue', icon:PlusCircleIcon},
     {name:'배지 공유하기', href: '/badge/certificate/share', icon:ShareIcon},
@@ -18,6 +19,7 @@ export default function BtnNav({contents=links}) {
     return(
         <>
             <div className="max-w-sm mx-auto flex">
+                {/* 버튼 렌더링 */}
                 {contents.map((content)=>{
                     const LinkIcon = content.icon;
                     return(

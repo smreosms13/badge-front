@@ -11,7 +11,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { Button } from "@/components/ui/button"
-import { Input, Select } from '@/components/ui/input';
+import { Input, Select } from '@/components/ui/input-select';
 import {
   Dialog,
   DialogClose,
@@ -29,12 +29,14 @@ import {
     ExclamationTriangleIcon 
 } from "@heroicons/react/24/outline"
 
+// gender select options
 const genderOptions = [
     { value:"M", disabled: false },
     { value:"F", disabled: false },
     { value:"X", disabled: false },
 ]; 
 
+// category select options
 const categoryOptions = [
     { value:"이력", disabled: false },
     { value:"건강", disabled: true  },
@@ -42,12 +44,14 @@ const categoryOptions = [
     { value:"신용", disabled: true  },
 ]; 
 
+// badge type options
 const badgeTypeOptions = [
     { value:"Standard", disabled: false },
     { value:"NFT", disabled: false },
     { value:"Utility", disabled: false }
 ]
 
+// 배지 생성을 위한 컴포넌트
 export default function IssueBadge() {
     const { currentUser } = useAuth();
     const { account } = useAccount();
@@ -60,8 +64,8 @@ export default function IssueBadge() {
     const [open, setOpen] = useState(false)
     const [content, setContent] = useState({})
 
-    //level, topic, skills, grade가 없어도록 Create 가능하도록
-    // 아래 백엔드 API(CreateABadge) 수정 필요. 
+    // api body default value
+    //level, topic, skills, grade가 없어도록 Create 가능하도록 API(CreateABadge) 수정 필요. 
     const dataDefault = { 
         userId: currentUser?.uid,
         walletAddress: "", 
@@ -89,7 +93,7 @@ export default function IssueBadge() {
     const router = useRouter()
     const nameRef = useRef()
     const emailRef = useRef()
-    // const affiliationRef = useRef()
+    // const affiliationRef = useRef()    // prototype은 불필요
     const badgeType = useRef()
     const subject = useRef()
     const description = useRef()
@@ -97,6 +101,7 @@ export default function IssueBadge() {
     const category = useRef()
     const badgeName = useRef()
 
+    // input onChange function
     const handleInputChange = (fieldName, newValue) => {
         setDataToSave((prevData)=>({
             ...prevData,
@@ -104,6 +109,7 @@ export default function IssueBadge() {
         }))
     }
 
+    // file(image) input onChange function
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         setImage(file)
@@ -117,7 +123,10 @@ export default function IssueBadge() {
             reader.readAsDataURL(file);
         }
     };
-
+    
+    // 배지 이미지 업로드
+    // 입력 정보를 기반으로 배지 생성
+    // api : CreateABadge
     async function uploadNow() {
 
         try {
@@ -136,13 +145,16 @@ export default function IssueBadge() {
                     dataTosave.description = description?.current.value
                     dataTosave.birthdate = startDate
 
-                    // send to backend for storing
+                    // send data to server to issue badge
                     try {
                         console.log(dataTosave)
 
                         const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/CreateABadge`, dataTosave)
                         setIsLoading(false)
+                        // fileInput value init
                         document.getElementById('fileInput').value = ''
+                        
+                        // set dialog content and opne dialog
                         setContent({
                             title: "Success",
                             description: "Badge created successfully",
@@ -154,6 +166,8 @@ export default function IssueBadge() {
                     } catch (error) {
                         console.log(error)
                         setIsLoading(false)
+
+                        // set dialog content and opne dialog
                         setContent({
                             variant: "destructive",
                             title: "Failed",
@@ -167,6 +181,8 @@ export default function IssueBadge() {
             });
         } catch (error) {
             console.log(error)
+            setIsLoading(false)
+            // set dialog content and opne dialog
             setContent({
                 variant: "destructive",
                 title: "Error",
@@ -174,19 +190,19 @@ export default function IssueBadge() {
                 status: false
 
             })
-            setIsLoading(false)
             setOpen(true)
         }
 
     }
 
-
     if (currentUser) {
+        // 배지 생성을 위한 Form 렌더링
         return (
             <div className="content-center px-4">
                 <div className=''>
                     { (section === 1) ? 
                         (   
+                            // 섹션 1 렌더링 
                             <>
                                 <div className='mb-5 text-center'>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="gray" className="w-7 h-7 mx-auto">
@@ -196,6 +212,7 @@ export default function IssueBadge() {
                                     <p className='text-md text-gray-500'>수취인에게 발급됩니다</p>
                                 </div>
                                 <div className='flex flex-col space-y-3'>
+                                    {/* 배지 수취인 정보 */}
                                     <p className='underline underline-offset-2 font-bold text-lg text-gray-600 mb-2'>배지 수취인</p>
                                     <Input 
                                         inputRef={nameRef} 
@@ -240,7 +257,9 @@ export default function IssueBadge() {
 
                         ) :
                         (
+                            // 섹션 2 렌더링
                             <div className='h-[31rem] overflow-auto scrollbar-hide'>
+                                {/* 배지 이미지 렌더링 */}
                                 <div
                                     onClick={() => document.getElementById('fileInput').click()}
                                     className='border flex items-center justify-center hover:bg-gray-100 cursor-pointer border-dashed rounded-xl border-gray-400'
@@ -265,9 +284,11 @@ export default function IssueBadge() {
 
                                 </div>
                                 <div className='flex flex-col'>
+                                    {/* 데이터 배지 정보 Input */}
                                     <p className='mt-5 mb-1 underline underline-offset-2 font-bold text-lg text-gray-600'>
                                         데이터 배지 정보
                                     </p>
+                                    {/* 배지 이름 */}
                                     <Input 
                                         required
                                         inputRef={badgeName} 
@@ -276,12 +297,14 @@ export default function IssueBadge() {
                                         value={dataTosave.badgeName} 
                                         onChange={(newValue)=>handleInputChange("badgeName", newValue)}
                                     />
+                                    {/* 배지 카테고리 */}
                                     <Select 
                                         selectRef={category} 
                                         defaultValue='배지 카테고리'
                                         options={categoryOptions}
                                         onChange={(newValue)=>handleInputChange("category", newValue)} 
                                     />
+                                    {/* 배지 유형 */}
                                     <Select 
                                         selectRef={badgeType} 
                                         defaultValue="배지 유형"
@@ -289,6 +312,7 @@ export default function IssueBadge() {
                                         onChange={(newValue)=>handleInputChange("badgetype", newValue)}
                                     >
                                     </Select>
+                                    {/* 배지 정보 제목 */}
                                     <Input 
                                         inputRef={subject} 
                                         type='text' 
@@ -296,6 +320,7 @@ export default function IssueBadge() {
                                         value={dataTosave.subject}
                                         onChange={(newValue)=>handleInputChange("subject", newValue)}
                                     />
+                                    {/* 배지 description */}
                                     <textarea
                                         ref={description}
                                         className='appearance-none p-2 border rounded-xl mt-4 ring-0 focus-visible:bg-none focus:outline-none' 
@@ -308,6 +333,7 @@ export default function IssueBadge() {
                     </div>
                     { (section === 1) ? (
                         <>
+                            {/* section 1 = next button */}
                             <div className='flex items-center justify-end mt-4'>
                                 <button
                                     onClick={()=> setSection(section+1)}
@@ -319,6 +345,7 @@ export default function IssueBadge() {
                         </>
                     ): (
                         <>
+                            {/* section 2 - prev and upload button */}
                             <div className='flex items-center justify-between mt-4'>
                                 <button
                                     onClick={() => setSection(section-1)}
@@ -346,7 +373,7 @@ export default function IssueBadge() {
                     )
                 }
 
-                
+                {/* 배지 생성 결과 dialog */}
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogContent className="sm:max-w-sm">
                         <DialogHeader className="items-center">

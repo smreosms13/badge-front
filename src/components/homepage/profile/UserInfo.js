@@ -3,9 +3,11 @@ import { UserCircleIcon, EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/out
 import { useAuth } from "@/context/Context";
 import Image from "next/image";
 
+// profile - UserInfo component
 export default function UserInfo({content}){
     const { currentUser } = useAuth()
 
+    // get user birthday
     const birthday = new Date(content.birthday);
     const year = birthday.getFullYear();
     const month = birthday.getMonth() +1 ;
@@ -14,6 +16,7 @@ export default function UserInfo({content}){
     return(
         <>
         <div className="flex items-center flex-col w-full bg-cover">
+            {/* User image */}
             <div className="flex h-[87px] w-[87px] items-center justify-center">
                 <Image
                 className="rounded-full"
@@ -32,13 +35,7 @@ export default function UserInfo({content}){
             </div>
         </div>
         <div className="flex mb-3 flex-col ">
-            <div className="">
-                <p className="text-sm font-normal text-gray-400">Full Name</p>
-                <div className="flex my-1">
-                    <UserCircleIcon className="w-5 h-5 stroke-gray-400"></UserCircleIcon>
-                    <p className="ms-5 text-sm">{currentUser.displayName}</p>
-                </div>
-            </div>
+            {/* email */}
             <div className="my-2">
                 <p className="text-sm font-normal text-gray-400">Email Address</p>
                 <div className="flex my-1">
@@ -46,6 +43,7 @@ export default function UserInfo({content}){
                     <p className="ms-5 text-sm">{currentUser.email}</p>
                 </div>
             </div>
+            {/* phone number */}
             <div className="">
                 <p className="text-sm font-normal text-gray-400">Phone Number</p>
                 <div className="flex my-1">
@@ -53,8 +51,9 @@ export default function UserInfo({content}){
                     <p className="ms-5 text-sm">{content.phone}</p>
                 </div>
             </div>
+            {/* birthday */}
             <div className="">
-                <p className="text-sm font-normal text-gray-400">Birth Day</p>
+                <p className="text-sm font-normal text-gray-400">Birthday</p>
                 <div className="flex my-1">
                     <div className="flex-grow ms-5 border-b border-slate-200 text-sm text-center">{year}</div>
                     <div className="flex-grow ms-5 border-b border-slate-200 text-sm text-center">{month}</div>

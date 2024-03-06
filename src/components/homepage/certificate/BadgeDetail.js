@@ -11,17 +11,17 @@ import { formatDate } from "@/lib/utils";
 // 배지 상세 정보 표시
 export default function BadgeDetail({content}){
 
+    // content 속성에서 관련 데이터 추출
     const hasTokenId = content.tokenId;
     const issuanceDate = formatDate(content.issuanceDate);
     const expirationDate = formatDate(content.expirationDate)
   
+    // BadgeDetail 컴포넌트 렌더링
     return(
       <>
           <div className="flex items-center flex-col w-full mb-5">
-            {/* badge Image*/}
-            <div
-              className="flex h-32 w-full justify-center"
-            >
+            {/* 배지 이미지 렌더링 */}
+            <div className="flex h-32 w-full justify-center">
               <div className="absolute flex h-32 w-32 items-center justify-center">
                 <Image
                   className="rounded-3xl border-[5px] border-slate-400"
@@ -31,7 +31,7 @@ export default function BadgeDetail({content}){
                 />
               </div>
             </div>
-          {/* badgeName, category, badgeType*/}
+          {/* 배지 이름, 카테고리 및 유형 렌더링 */}
           <div className="mt-3 flex flex-col items-center">
             <h4 className="text-2xl font-bold">
               {content.badgeName}
@@ -39,17 +39,18 @@ export default function BadgeDetail({content}){
             <h5 className="text-base font-semibold text-blue-600">{content.dataBadgeClaim.category} 배지 </h5>
             <p className="text-sm text-gray-400">{content.dataBadgeClaim.type} 배지 </p>
           </div>
-          {/* connect to etherscan using txHash */}
+          {/* tokenId가 존재하는 경우 NFT 상세 정보 링크를 렌더링 */}
           {hasTokenId !== "" && (
             <div className="ml-auto">
               <a 
                 href={`https://sepolia.etherscan.io/tx/${content.txHash}`} 
                 className="bg-blue-600 rounded-xl p-1 px-2 text-white font-bold"
-              >NFT Detail</a>
+              >NFT 상세 정보</a>
             </div>
             )
           }
         </div>
+        {/* 상세 배지 정보를 렌더링 */}
         <div className="flex-col mx-auto">
             <div className="bg-slate-100 rounded-md p-2">
                 <div className="flex">

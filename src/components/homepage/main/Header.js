@@ -15,13 +15,13 @@ import {
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
   
-
-
+// 메인 페이지 Header
 export default function Header(){
     const { logout, currentUser } = useAuth()
-    console.log(currentUser)
-    const [isLoading, setIsLoading]=useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
+
+    // 로그아웃 함수
     async function signOut() {
         try {
             setIsLoading(true)
@@ -43,6 +43,7 @@ export default function Header(){
     return(
         <div className="flex items-center justify-between mb-1">
             <div>
+                {/* user image dropdown */}
                 <DropdownMenu>
                     <div className="flex">
                         <DropdownMenuTrigger>
@@ -61,21 +62,25 @@ export default function Header(){
                     </div>
                     <DropdownMenuContent>
                         <DropdownMenuItem>
-                        <Link href="/user/profile" name="profile" className="flex mb-1 items-center">Profile</Link>
+                            {/* 프로필 링크 */}
+                            <Link href="/user/profile" name="profile" className="flex mb-1 items-center">Profile</Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem>
+                            {/* 로그아웃 버튼 */}
                             <button onClick={() => signOut()}>Log out</button>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
             <div className="flex">
+                {/* 검색 버튼 - 검색 기능 개발 필요 */}
                 <Link
                     href='/home'
                     className='flex justify-center items-center font-black w-8 h-8 rounded-full bg-slate-200 mb-1 mr-2'
                 >                                
                     <MagnifyingGlassIcon className="w-5 h-5"></MagnifyingGlassIcon>
                 </Link>
+                {/* 지갑 연결 버튼 */}
                 <ConnectButton showBalance={false} accountStatus="avatar" chainStatus="icon"/>
             </div>
         </div>
