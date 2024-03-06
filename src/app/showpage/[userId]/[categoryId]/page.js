@@ -14,23 +14,31 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 
+// 배지 컬렉션 공유 페이지
+// 로그인 없이 접속 가능해야 함
 export default function Page() {
   const [badges, setBadges] = useState([]);
   const [userInfo, setUserInfo] = useState({});
   const [category, setCategoryInfo] = useState([]);
+
+  // url parameter로부터 userId, categoryId 추출
   const params = useParams();
   const userId = decodeURIComponent(params.userId);
   const categoryId = decodeURIComponent(params.categoryId);
+  // api query에 userId, categoryId 넣기
   const apiUrl = `https://us-central1-openbadges-537a3.cloudfunctions.net/api/getSingleCategoryByUserID?userID=${userId}&categoryID=${categoryId}`
   
   useEffect(() => {
     fetchData();
   }, []);
 
+  // colletion data fetch
+  // api : getSingleCategoryByUserID
   const fetchData = async () => {
     try {
         const response = await axios.post(apiUrl);
         const data = response?.data
+        // data 내의 userInfo, category, badges 분할하여 state 저장
         setUserInfo(data?.userInfo);
         setCategoryInfo(data?.category);
         setBadges(data?.badges);
@@ -42,6 +50,7 @@ export default function Page() {
 
   return (
     <main className="mx-auto max-w-sm h-dvh flex-col shadow-2xl p-6 bg-red-200 overflow-y-scroll scrollbar-hide">
+      {/* user information */}
       <div className="my-3">
         <div className="flex items-center flex-col w-full bg-cover">
               <div className="dark:!border-navy-700 flex h-[110px] w-[110px] items-center justify-center rounded-full border-[4px] border-white bg-pink-400">
@@ -61,12 +70,15 @@ export default function Page() {
           </div>
         </div>
       </div>
+      {/* badges show */}
       <div className="flex-col">
         <div className="flex flex-wrap">
+          {/* check badge vaildation and show badges*/}
           {
             badges?.length !== 0 ? (
               badges.map((badge, index) => (
                 <div className="p-3 m-3 bg-white w-fit rounded-xl flex items-center justify-center" key={index}>
+                  {/* Drawer : show badge detail */}
                   <Drawer>
                     <DrawerTrigger asChild>
                       <Image src={badge.image} alt={badge.badgeName} width={100} height={100}/>
@@ -108,7 +120,7 @@ export default function Page() {
                 </div>
               ))
             ) : (
-              <p>Loading...</p>
+              <p>No data...</p>
             )
           }
         </div>
