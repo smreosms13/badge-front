@@ -3,7 +3,7 @@ import { UserCircleIcon, EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/out
 import { useAuth } from "@/context/Context";
 import Image from "next/image";
 
-export default function Table({content}){
+export default function UserInfo({content}){
     const { currentUser } = useAuth()
 
     const birthday = new Date(content.birthday);
@@ -14,22 +14,22 @@ export default function Table({content}){
     return(
         <>
         <div className="flex items-center flex-col w-full bg-cover">
-          <div className="flex h-[87px] w-[87px] items-center justify-center">
-            <Image
-              className="rounded-full"
-              src={currentUser.photoURL}
-              alt="USER"
-              width={80}
-              height={80}
-            />
-          </div>
-        {/* Name and position */}
-        <div className="flex flex-col items-center">
-            <h4 className="text-navy-700 text-xl font-bold dark:text-white">
-            {currentUser.displayName}
-            </h4>
-            <h5 className="text-base font-normal text-gray-600">{content.subscription}</h5>
-        </div>
+            <div className="flex h-[87px] w-[87px] items-center justify-center">
+                <Image
+                className="rounded-full"
+                src={currentUser.photoURL}
+                alt="USER"
+                width={80}
+                height={80}
+                />
+            </div>
+            {/* Name and position */}
+            <div className="flex flex-col items-center">
+                <h4 className="text-navy-700 text-xl font-bold dark:text-white">
+                {currentUser.displayName}
+                </h4>
+                <h5 className="text-base font-normal text-gray-600">{content.subscription}</h5>
+            </div>
         </div>
         <div className="flex mb-3 flex-col ">
             <div className="">
