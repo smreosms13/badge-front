@@ -61,9 +61,15 @@ export default function Goshare() {
 
     // URL 공유 버튼 onClick funtion
     const handleShareClick = () => {
-        const url = `/showpage/${currentUser?.uid}/${categoryId}`;
-        navigator.clipboard.writeText(window.location.origin + url);
-        alert('컬렉션의 URL이 클립보드에 복사되었습니다!');
+        // check category id
+        if (categoryId) {
+            const url = `/showpage/${currentUser?.uid}/${categoryId}`;
+            navigator.clipboard.writeText(window.location.origin + url);
+            alert('컬렉션의 URL이 클립보드에 복사되었습니다!');
+        }
+        else {
+            alert('컬렉션 이름을 입력해 주세요!')
+        }
     };
 
     return (
